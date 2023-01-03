@@ -96,7 +96,7 @@ client.on( "messageCreate", async (message) => {
         case "simjoin":
             if (!args.length) return;
             await ManageServerService.setWelcome(message, args);
-            break;
+            break
     }
 
     if(command === "greetme"){
