@@ -1,7 +1,7 @@
 ## This is my Project - a discord Bot that helps you to manage your server
 ### feel free to try it out in your server
 
-[![ADD](https://img.shields.io/badge/-ADD_TO_MY_SERVER-EB179D?style=plastic&logo=ADD)](https://discord.com/api/oauth2/authorize?client_id=1040778966857961513&permissions=8&scope=bot0)
+https://discord.com/api/oauth2/authorize?client_id=1040778966857961513&permissions=8&scope=bot
 
 #### commands list:
 
