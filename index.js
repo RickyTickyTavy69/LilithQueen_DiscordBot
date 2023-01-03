@@ -109,7 +109,7 @@ client.on("ready", async () => {
     client.emit("guildMemberAdd");
     try{
         client.user.setActivity("♂️ stick♂️  in ♂️ my ass ♂");
-        //client.user.setActivity("Hello, I am Lilith ;)");
+        //client.user.setActivity("Hello, I am Lilith ;) ");
         await mongoose.connect(process.env.MONGO_URI, () => {
             console.log("db connected");
         });
