@@ -30,7 +30,7 @@ await client.login(process.env.BOT_TOKEN);
 client.on("ready", async () => {
     console.log("bot ready!");
     try{
-        client.user.setActivity("У меня есть апельсиновая пушка, и я иногда из неё стреляю");
+        client.user.setActivity("I am Lilith");
         await mongoose.connect(process.env.MONGO_URI, () => {
             console.log("db connected");
         });
