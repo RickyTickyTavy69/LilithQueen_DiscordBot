@@ -164,6 +164,7 @@ client.on( "messageCreate", async (message) => {
             await WordsGameService.setWordsChanel(message);
             break;
         case "help":
+            console.log("help embed");
             await EmbedService.createEmbed(message, "help");
             break;
 
