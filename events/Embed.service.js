@@ -43,15 +43,16 @@ class EmbedService{
         console.log("creating embed");
         const content = message.content;
         const author = message.author.username;
-        const id = (action === "unblocked")? args[0] : args[0].slice(2, args[0].length-1); //unblock user with id, without the mention
+        let id;
+        if (args) id = (action === "unblocked")? args[0] : args[0].slice(2, args[0].length-1); //unblock user with id, without the mention
         const member = await message.guild.members.cache.get(id);
-        const username = (action === "unblocked")? "": member.user.username;
+        const username = (action === "unblocked")? "": member?.user.username;
 
 
 
         switch(action) {
             case "kiss":
-                console.log("member", member.user.username);
+                console.log("member", member.user.username)
                 const kissEmbed = new EmbedBuilder()
                     .setTitle(`${author} kisses ${username}`)
                     .setDescription("smoooooooch")
@@ -130,7 +131,6 @@ class EmbedService{
                     .setTitle(`👠Lilith Queen👑`)
                     .setColor(0xCC28C1)
                     .setURL("https://github.com/RickyTickyTavy69/LilithQueen_DiscordBot")
-                    .setDescription("")
                     .setAuthor({ name: "информация:" })
                     .addFields(
                         { name: '\u200B', value: '\u200B' },
