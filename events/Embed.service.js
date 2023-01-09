@@ -124,6 +124,31 @@ class EmbedService{
                     .setImage("https://media.tenor.com/OTqIFOVS7OkAAAAd/ora.gif");
                 message.channel.send({embeds: [kickEmbeed]})
                 break;
+            case "help":
+                console.log("creating help embed");
+                const helpEmbed = new EmbedBuilder()
+                    .setTitle(`👠Lilith Queen👑`)
+                    .setColor(0xCC28C1)
+                    .setURL("https://github.com/RickyTickyTavy69/LilithQueen_DiscordBot")
+                    .setDescription("")
+                    .setAuthor({ name: "информация:" })
+                    .addFields(
+                        { name: '\u200B', value: '\u200B' },
+                        { name: '$clearnew', value: 'deletes new messages in the chanel, if they are not older then 14 days', inline: true },
+                        { name: '$updatestatus **status**', value: 'updates the status which the bot shows', inline: true },
+                        { name: '$privatecn', value: 'creates a private voice chanel with your name', inline: true },
+                        { name: '$kiss @username', value: 'you kiss this user (creates an embed with gif file)', inline: true },
+                        { name: '$spank @username', value: 'you spank this user (creates an embed with gif file)', inline: true },
+                        { name: '$embrace @username', value: 'you embrace this user (creates an embed with gif file)', inline: true },
+                        { name: '$avatar @username', value: 'shows an embed with the avatar of user in bigger size', inline: true },
+                        { name: '$block @username', value: 'blocks this user in your server', inline: true },
+                        { name: '$unblock @username', value: 'unblocks this user in your server', inline: true },
+                        { name: '$throw @username', value: 'throws this user from your server', inline: true },
+
+                    )
+                    .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
+                message.channel.send({embeds: [helpEmbed]})
+                break;
         }
 
 
