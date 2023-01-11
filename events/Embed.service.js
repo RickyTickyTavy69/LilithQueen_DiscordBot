@@ -1,6 +1,6 @@
 import Discord, {EmbedBuilder} from "discord.js";
-//import kiss from "../assets/embed/kiss.gif";
 import {client} from "../index.js";
+import WelcomeModel from "../models/welcome.model.js";
 
 class EmbedService{
 
@@ -11,13 +11,30 @@ class EmbedService{
             if(action === "join"){
                 // Надо сначала проверить, есть ли в бд welcome текст
                 const member = args;
+                const id = member.guild.id;
+                console.log("member", member);
+                const welcome = await WelcomeModel.findOne({id});
+                const text = welcome.text;
                 const username = member.user.username;
                 const joinEmbed = new EmbedBuilder()
-                    .setTitle(`${username} just joined our server! Welcome!}`)
+                    .setTitle(`${welcome? text + ", " + username: `${username} just joined our server! Welcome!` }`)
                     .setImage("https://media.tenor.com/iApvZIbSkdYAAAAC/yorokobu-delighted.gif");
                 const chanel = await client.channels.cache.find(channel => channel.id === this.greetingChanelId);
                 console.log("sending embed", chanel);
                 chanel.send(({embeds: [joinEmbed]}))
+                return;
+            }
+
+            if(action === "words"){
+                const wordsEmbed = new EmbedBuilder()
+                    .setTitle(`chanel set for words game. To add players tag them. Write the first word to begin`)
+                    .setImage("https://t4.ftcdn.net/jpg/00/24/81/79/240_F_24817953_1qgJExq0jQmJYkifPXnW7lr5M2BGNH8E.jpg")
+                    .addFields(
+                    { name: '\u200B', value: '\u200B' },
+                    { name: 'added players:', value: ' nobody...', inline: true }
+                );
+                const {chanel} = args;
+                chanel.send(({embeds: [wordsEmbed]}))
                 return;
             }
         }
