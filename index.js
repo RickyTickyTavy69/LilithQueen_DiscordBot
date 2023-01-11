@@ -41,7 +41,7 @@ client.on("ready", async () => {
 });
 
 
-const prefix = "!";
+const prefix = "$";
 
 client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
     createPrivateRoom(oldVoiceState, newVoiceState);
