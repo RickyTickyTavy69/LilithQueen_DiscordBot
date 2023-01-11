@@ -210,7 +210,13 @@ client.on( "messageCreate", async (message) => {
             await GetInfoService.getFilmInfo(message, args);
             break;
         case "deleteone":
-           await message.reply("hey");
+            try{
+                await message.channel.messages.fetch("1062727151977242634");
+                await message.delete();
+            } catch(e){
+                message.reply("error while deleting", e);
+            }
+            break;
     }
 
 
