@@ -210,7 +210,7 @@ client.on( "messageCreate", async (message) => {
             await GetInfoService.getFilmInfo(message, args);
             break;
         case "deleteone":
-            await message.channel.send("hello");
+           await message.reply("hey");
     }
 
 
