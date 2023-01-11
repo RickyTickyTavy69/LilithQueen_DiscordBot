@@ -14,6 +14,7 @@ import EmbedService from "./events/Embed.service.js";
 import ManageServerService from "./events/ManageServer.service.js";
 import WordsGameService from "./events/wordsGame.service.js";
 import wordsGameService from "./events/wordsGame.service.js";
+import GetInfoService from "./events/getInfo.service.js";
 
 // import models
 import WordsGameModel from "./models/wordsGameModel.js";
@@ -167,6 +168,10 @@ client.on( "messageCreate", async (message) => {
             console.log("help embed");
             await EmbedService.createEmbed(message, "help");
             break;
+        case "info":
+            console.log("getting info...");
+            if(!args) return;
+            await GetInfoService.getFilmInfo(message, args);    
 
     }
 
