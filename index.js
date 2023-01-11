@@ -47,6 +47,14 @@ client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
     createPrivateRoom(oldVoiceState, newVoiceState);
 });
 
+client.on("interactionCreate", async (interaction) => {
+    if(!interaction.isCommand()) return;
+
+    if(interaction.commandName === "test"){
+        await interaction.reply("test works...");
+    }
+})
+
 client.on( "messageCreate", async (message) => {
     if (message.author.bot) return;
 
@@ -208,14 +216,6 @@ client.on( "messageCreate", async (message) => {
             console.log("getting info...");
             if(!args) return;
             await GetInfoService.getFilmInfo(message, args);
-            break;
-        case "deleteone":
-            try{
-                await message.channel.messages.fetch("1062727151977242634");
-                await message.delete();
-            } catch(e){
-                message.reply("error while deleting", e);
-            }
             break;
     }
 
