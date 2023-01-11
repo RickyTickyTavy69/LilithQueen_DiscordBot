@@ -21,8 +21,10 @@ https://discord.com/api/oauth2/authorize?client_id=1040778966857961513&permissio
 
 -- $block @username -------------------- blocks this user in your server
 
--- $unblock @username -------------------- unblocks this user in your server
+-- $unblock 'user ID' -------------------- unblocks this user in your server
 
 -- $throw @username ----------------------- throws this user from your server
+
+-- $help ----------------------- information about the bot and her commands
 
 sometimes the bot is reacting to new messages

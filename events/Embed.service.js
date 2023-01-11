@@ -43,15 +43,16 @@ class EmbedService{
         console.log("creating embed");
         const content = message.content;
         const author = message.author.username;
-        const id = (action === "unblocked")? args[0] : args[0].slice(2, args[0].length-1); //unblock user with id, without the mention
+        let id;
+        if (args) id = (action === "unblocked")? args[0] : args[0].slice(2, args[0].length-1); //unblock user with id, without the mention
         const member = await message.guild.members.cache.get(id);
-        const username = (action === "unblocked")? "": member.user.username;
+        const username = (action === "unblocked")? "": member?.user.username;
 
 
 
         switch(action) {
             case "kiss":
-                console.log("member", member.user.username);
+                console.log("member", member.user.username)
                 const kissEmbed = new EmbedBuilder()
                     .setTitle(`${author} kisses ${username}`)
                     .setDescription("smoooooooch")
@@ -123,6 +124,30 @@ class EmbedService{
                     .setThumbnail("https://media.tenor.com/eEoBYl5G0aIAAAAC/skull.gif")
                     .setImage("https://media.tenor.com/OTqIFOVS7OkAAAAd/ora.gif");
                 message.channel.send({embeds: [kickEmbeed]})
+                break;
+            case "help":
+                console.log("creating help embed");
+                const helpEmbed = new EmbedBuilder()
+                    .setTitle(`👠Lilith Queen👑`)
+                    .setColor(0xCC28C1)
+                    .setURL("https://github.com/RickyTickyTavy69/LilithQueen_DiscordBot")
+                    .setAuthor({ name: "информация:" })
+                    .addFields(
+                        { name: '\u200B', value: '\u200B' },
+                        { name: '$clearnew', value: 'deletes new messages in the chanel, if they are not older then 14 days', inline: true },
+                        { name: '$updatestatus **status**', value: 'updates the status which the bot shows', inline: true },
+                        { name: '$privatecn', value: 'creates a private voice chanel with your name', inline: true },
+                        { name: '$kiss @username', value: 'you kiss this user (creates an embed with gif file)', inline: true },
+                        { name: '$spank @username', value: 'you spank this user (creates an embed with gif file)', inline: true },
+                        { name: '$embrace @username', value: 'you embrace this user (creates an embed with gif file)', inline: true },
+                        { name: '$avatar @username', value: 'shows an embed with the avatar of user in bigger size', inline: true },
+                        { name: '$block @username', value: 'blocks this user in your server', inline: true },
+                        { name: '$unblock @username', value: 'unblocks this user in your server', inline: true },
+                        { name: '$throw @username', value: 'throws this user from your server', inline: true },
+
+                    )
+                    .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
+                message.channel.send({embeds: [helpEmbed]})
                 break;
         }
 
