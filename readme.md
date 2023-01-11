@@ -13,9 +13,9 @@ https://discord.com/api/oauth2/authorize?client_id=1040778966857961513&permissio
 
 -- $kiss @username ------------------- you kiss this user (creates an embed with gif file)
 
--- $spank @username ------------------ you spank this user (creates an embed with gif file)
+-- $hit @username ------------------ you hit this user (creates an embed with gif file)
 
--- $embrace @username ------------------ you embrace this user (creates an embed with gif file)
+-- $hug @username ------------------ you embrace this user (creates an embed with gif file)
 
 -- $avatar @username ------------------- shows an embed with the avatar of user in bigger size
 

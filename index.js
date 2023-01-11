@@ -126,11 +126,11 @@ client.on( "messageCreate", async (message) => {
             if (!args.length) return;
             await EmbedService.createEmbed(message, "kiss", args);
             break;
-        case "spank":
+        case "hit":
             if (!args.length) return;
             await EmbedService.createEmbed(message, "spank", args);
             break;
-        case "embrace":
+        case "hug":
             if (!args.length) return;
             await EmbedService.createEmbed(message, "embrace", args);
             break;

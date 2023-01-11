@@ -62,7 +62,7 @@ class EmbedService{
             case "spank":
                 console.log("member", member.user.username);
                 const spankEmbed = new EmbedBuilder()
-                    .setTitle(`${author} spanks ${username}`)
+                    .setTitle(`${author} hit ${username}`)
                     .setDescription("шлёп!")
                     .setImage("https://media.tenor.com/DCzuSR89_4AAAAAC/slap-smack.gif");
                 message.channel.send({embeds: [spankEmbed]});
@@ -138,13 +138,13 @@ class EmbedService{
                         { name: '$updatestatus **status**', value: 'updates the status which the bot shows', inline: true },
                         { name: '$privatecn', value: 'creates a private voice chanel with your name', inline: true },
                         { name: '$kiss @username', value: 'you kiss this user (creates an embed with gif file)', inline: true },
-                        { name: '$spank @username', value: 'you spank this user (creates an embed with gif file)', inline: true },
-                        { name: '$embrace @username', value: 'you embrace this user (creates an embed with gif file)', inline: true },
+                        { name: '$hit @username', value: 'you hit this user (creates an embed with gif file)', inline: true },
+                        { name: '$hug @username', value: 'you embrace this user (creates an embed with gif file)', inline: true },
                         { name: '$avatar @username', value: 'shows an embed with the avatar of user in bigger size', inline: true },
                         { name: '$block @username', value: 'blocks this user in your server', inline: true },
                         { name: '$unblock @username', value: 'unblocks this user in your server', inline: true },
                         { name: '$throw @username', value: 'throws this user from your server', inline: true },
-
+                        { name: '$help', value: 'information about the bot and her commands', inline: true },
                     )
                     .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
                 message.channel.send({embeds: [helpEmbed]})
