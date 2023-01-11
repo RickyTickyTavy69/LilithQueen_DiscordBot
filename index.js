@@ -13,7 +13,11 @@ import ManageChanelsService from "./events/ManageChanels.service.js";
 import EmbedService from "./events/Embed.service.js";
 import ManageServerService from "./events/ManageServer.service.js";
 import WordsGameService from "./events/wordsGame.service.js";
+<<<<<<< HEAD
+=======
 import wordsGameService from "./events/wordsGame.service.js";
+import GetInfoService from "./events/getInfo.service.js";
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
 
 // import models
 import WordsGameModel from "./models/wordsGameModel.js";
@@ -30,7 +34,11 @@ await client.login(process.env.BOT_TOKEN);
 client.on("ready", async () => {
     console.log("bot ready!");
     try{
+<<<<<<< HEAD
+        client.user.setActivity("У меня есть апельсиновая пушка, и я иногда из неё стреляю");
+=======
         client.user.setActivity("I am Lilith");
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
         await mongoose.connect(process.env.MONGO_URI, () => {
             console.log("db connected");
         });
@@ -41,7 +49,7 @@ client.on("ready", async () => {
 });
 
 
-const prefix = "$";
+const prefix = "!";
 
 client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
     createPrivateRoom(oldVoiceState, newVoiceState);
@@ -49,21 +57,74 @@ client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
 
 client.on( "messageCreate", async (message) => {
     if (message.author.bot) return;
+<<<<<<< HEAD
+    await LilithService.react(message); // - тут иногда происходит ошибка.
+    //***
+    // words game
+
+    //await LilithService.responde(message);
+
+=======
 
 
     //***
     // words game
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
     const WordsGames = await WordsGameModel.find();
     const WordsGameChannels = WordsGames.map((WordsGame) => {
         return WordsGame.channelId;
     })
     console.log("ids", WordsGameChannels, message.channel.id);
     if(WordsGameChannels.indexOf(message.channel.id) !== -1){
+<<<<<<< HEAD
+            const wordGame = await WordsGameService.getWordGame(message);
+=======
             const wordGame = await wordsGameService.getWordGame(message);
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
 
             if(message.content === "$wordsgamestop"){
                 await WordsGameService.stopGame(message);
             }
+<<<<<<< HEAD
+            console.log("size", message.mentions.users.size);
+            if(message.mentions.users.size){
+                //const keys = Object.keys(message.mentions.users).length;
+                //console.log("keys", keys);
+                const mentions = message.mentions.users;
+                console.log("mentions", mentions);
+                let usersArray = [];
+                let usernames = [];
+                mentions.forEach((mention) => {
+                    console.log("mentioned user id", mention.id);
+                    usersArray.push({
+                        userId: mention.id,
+                        username: mention.username,
+                        points: 0,
+                        active: true,
+                    });
+                    usernames.push(mention.username);
+                });
+                await WordsGameService.addUsers(message, usersArray);
+                await message.reply(`you added players: ${usernames.join(", ")}`);
+                return;
+            }
+
+
+            if(!wordGame.gameActive) {
+                console.log("game move... analyze game move...");
+                const users = await WordsGameService.checkUsers(message);
+                if(!users){
+                    console.log("users not found");
+                    await message.reply("you have not added any player yet. Add players before you start the game...");
+                    return;
+                }else {
+                    console.log("users found");
+                    await WordsGameService.checkWord(message);
+                    await message.reply(`first word - ${message.content}. next word must begin with ${message.content[message.content.length - 1]}`);
+                }
+            } else {
+                await WordsGameService.checkWord(message);
+=======
 
             if(message.mentions){
                 const mentions = message.mentions.users;
@@ -85,13 +146,18 @@ client.on( "messageCreate", async (message) => {
                 await WordsGameService.saveWord(message);
             } else {
                 await WordsGameService.checkWord(message)
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
             }
     }
     // words game
     // ***
 
 
+<<<<<<< HEAD
+
+=======
     //await LilithService.react(message); - тут иногда происходит ошибка.
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
     //console.log("message create", message);
     //console.log("content", message.content);
     if (message.author.bot) return;
@@ -163,10 +229,17 @@ client.on( "messageCreate", async (message) => {
         case "wordsgame":
             await WordsGameService.setWordsChanel(message);
             break;
+<<<<<<< HEAD
+=======
         case "help":
             console.log("help embed");
             await EmbedService.createEmbed(message, "help");
             break;
+        case "info":
+            console.log("getting info...");
+            if(!args) return;
+            await GetInfoService.getFilmInfo(message, args);    
+>>>>>>> 5231eef25a18bb10caa4cd2c1962afde347f92c1
 
     }
 
