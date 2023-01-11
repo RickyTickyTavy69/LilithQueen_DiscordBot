@@ -208,6 +208,9 @@ client.on( "messageCreate", async (message) => {
             console.log("getting info...");
             if(!args) return;
             await GetInfoService.getFilmInfo(message, args);
+            break;
+        case "deleteone":
+            await message.channel.send("hello");
     }
 
 
