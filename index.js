@@ -1,4 +1,5 @@
 import Discord from "discord.js";
+import {Collection} from "discord.js";
 import {GatewayIntentBits} from "discord.js";
 import createPrivateRoom from "./events/createPrivateRoom.js";
 
@@ -216,6 +217,13 @@ client.on( "messageCreate", async (message) => {
             console.log("getting info...");
             if(!args) return;
             await GetInfoService.getFilmInfo(message, args);
+            break;
+        case "stopreact":
+
+            if(message.member.permissionsIn(message.channel).has("ADMINISTRATOR")){
+                await LilithService.stopReact();
+                await message.reply("stopped reactions");
+            }
             break;
     }
 

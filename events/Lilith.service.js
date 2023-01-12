@@ -4,6 +4,7 @@ class LilithService{
 
     static reactions = ["❤", "🔥", "👅", "😋", "💋", "😘", "🤟🏻", "🤟🏾", "🍓", "🍑", "🌈", "🎉", "🍉", "✅"];
     static words = [["мужчина", "мужик", "парень", "мужику", "мужика", "мужиком", "мужчиной", "мужчину", "мужчине", "парню", "парнем", "парня"], ["кровь", "вампиры", "кровью", "месячные"]];
+    static reaction = true;
 
     static async updateStatus(args, message, client){
         const argsString = args.join(" ");
@@ -12,13 +13,19 @@ class LilithService{
     }
 
     static async react(message){
-        const random = Math.floor(+(Math.random() * 13));
-        const random2 = Math.floor(+(Math.random() * 11));
-        if(random2 === 3 || random2 === 6 || random2 === 9 || random2 === 1) {
-            setTimeout(() => {
-                message.react(this.reactions[random]);
-            }, 5000);
+        if(this.reaction){
+            const random = Math.floor(+(Math.random() * 13));
+            const random2 = Math.floor(+(Math.random() * 11));
+            if(random2 === 3 || random2 === 6 || random2 === 9) {
+                setTimeout(() => {
+                    message.react(this.reactions[random]);
+                }, 5000);
+            }
         }
+    }
+
+    static async stopReact(){
+        this.reaction = false;
     }
 
     static async responde(message){

@@ -27,4 +27,6 @@ https://discord.com/api/oauth2/authorize?client_id=1040778966857961513&permissio
 
 -- $help ----------------------- information about the bot and her commands
 
+-- $stopreact --------------------- stops bot reactions
+
 sometimes the bot is reacting to new messages

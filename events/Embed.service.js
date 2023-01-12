@@ -145,6 +145,7 @@ class EmbedService{
                         { name: '$unblock @username', value: 'unblocks this user in your server', inline: true },
                         { name: '$throw @username', value: 'throws this user from your server', inline: true },
                         { name: '$help', value: 'information about the bot and her commands', inline: true },
+                        {name: '$stopreact', value: 'stops bot reactions', inline: true}
                     )
                     .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
                 message.channel.send({embeds: [helpEmbed]})
