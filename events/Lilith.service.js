@@ -16,7 +16,7 @@ class LilithService{
         if(this.reaction){
             const random = Math.floor(+(Math.random() * 13));
             const random2 = Math.floor(+(Math.random() * 11));
-            if(random2 === 3 || random2 === 6 || random2 === 9) {
+            if(random2 === 3 || random2 === 6) {
                 setTimeout(() => {
                     message.react(this.reactions[random]);
                 }, 5000);

@@ -219,10 +219,11 @@ client.on( "messageCreate", async (message) => {
             await GetInfoService.getFilmInfo(message, args);
             break;
         case "stopreact":
-
             if(message.member.permissionsIn(message.channel).has("ADMINISTRATOR")){
                 await LilithService.stopReact();
                 await message.reply("stopped reactions");
+            } else {
+                await message.reply("You have no permissions to tell Lilith, what to do. Only Admin of the server can.")
             }
             break;
     }
