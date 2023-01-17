@@ -25,8 +25,13 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INSOMNIA_GUILD_ID),
             { body: commands },
         );
+        const data1 = await rest.put(
+            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TARTALOS_GUILD_ID),
+            { body: commands },
+        );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+        console.log(`Successfully reloaded ${data1.length} application (/) commands.`);
     } catch (error) {
         // And of course, make sure you catch and log any errors!
         console.error(error);
