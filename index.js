@@ -1,65 +1,148 @@
-import Discord from "discord.js";
-import {Collection} from "discord.js";
+import Discord, {Partials, Events, Collection} from "discord.js";
 import {GatewayIntentBits} from "discord.js";
 import createPrivateRoom from "./events/createPrivateRoom.js";
+
+//dotenv
+import dotenv from "dotenv";
+dotenv.config();
+
 
 //import db
 import mongoose from "mongoose";
 
-// import event Services
-import UserEventsService from "./events/UserEvents.service.js";
+// import event Services - rewrite to commands!
+/*import UserEventsService from "./events/UserEvents.service.js";
 import ChanelMessagesService from "./events/ChanelMessages.service.js";
-import LilithService from "./events/Lilith.service.js";
 import ManageChanelsService from "./events/ManageChanels.service.js";
 import EmbedService from "./events/Embed.service.js";
 import ManageServerService from "./events/ManageServer.service.js";
 import WordsGameService from "./events/wordsGame.service.js";
-import GetInfoService from "./events/getInfo.service.js";
+import GetInfoService from "./events/getInfo.service.js";*/
+// rewrite to commands
+import LilithService from "./events/Lilith.service.js";
 
 // import models
 import WordsGameModel from "./models/wordsGameModel.js";
+import GallowsGameService from "./events/gallowsGameService.js";
 
-export const client = new Discord.Client({intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildVoiceStates,
-    ]});
+//discord rest
+import {REST} from "discord.js";
+import {Routes} from "discord.js";
+const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN);
 
-await client.login(process.env.BOT_TOKEN);
+
+export const client = new Discord.Client({
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.MessageContent,
+            GatewayIntentBits.GuildVoiceStates,
+            GatewayIntentBits.DirectMessages,
+            GatewayIntentBits.DirectMessageReactions,
+            GatewayIntentBits.DirectMessageTyping,
+        ], partials: [
+            Partials.Message, Partials.User, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.ThreadMember
+        ]
+    }
+);
+
+client.commands = new Collection();
+client.functions = new Collection()
+//import commands
+import commandArray from "./commands/commands.js"
+import functions from "./commands/functions.js"
+
+for(const command of commandArray){
+    client.commands.set(command.data.name, command);
+}
+
+for(const func of functions){
+    client.functions.set(func.data.name, func);
+}
+
+
+/// trying slash commands ///
+
+const start = async () => {
+    try{
+        await client.login(process.env.BOT_TOKEN)
+        await mongoose.connect(process.env.MONGO_URI, () => {
+            console.log("db connected")
+        });
+
+        //await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INSOMNIA_GUILD_ID), {body: commands})
+    } catch(e){
+        console.log("error while starting", e);
+    }
+
+}
+start();
+
+
 
 client.on("ready", async () => {
-    console.log("bot ready!");
     try{
         client.user.setActivity("У меня есть апельсиновая пушка, и я иногда из неё стреляю");
-        await mongoose.connect(process.env.MONGO_URI, () => {
-            console.log("db connected");
-        });
     } catch(e){
         console.error("error", e);
     }
-    console.log("I am ready for you, darling");
 });
 
+client.on(Events.InteractionCreate, async (interaction) => {
 
-const prefix = "$";
+        if (interaction.isButton()) {
+            //console.log("button pressed")
+            //console.log(`customId is ${interaction.customId}`);
+            const actionId = interaction.customId.split(" ")[0];
+            console.log("actionId", actionId);
+            const targetId = interaction.customId.split(" ")[1];
+            //console.log(`targetId is ${targetId}`);
+            const targetUser = await client.users.fetch(targetId);
+            const func = interaction.client.functions.get(actionId);
+            try{
+                await func.execute(interaction, targetUser);
+            } catch(e){
+                console.log("error", e);
+                await interaction.reply({content: "простите, произошла ашипка", ephemeral: true })
+            }
+            return;
+        }
+
+        if(!interaction.isChatInputCommand()) return
+        console.log("create", interaction.client.commands);
+        console.log("command name", interaction.commandName);
+        const command = interaction.client.commands.get(interaction.commandName);
+
+        try{
+            await command.execute(interaction);
+        } catch(e){
+            console.log("error", e);
+            await interaction.reply({content: "простите, произошла ашипка", ephemeral: true })
+        }
+})
+
+/// trying slash commands ///
+
 
 client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
     createPrivateRoom(oldVoiceState, newVoiceState);
 });
 
-client.on("interactionCreate", async (interaction) => {
-    if(!interaction.isCommand()) return;
-
-    if(interaction.commandName === "test"){
-        await interaction.reply("test works...");
-    }
-})
-
 client.on( "messageCreate", async (message) => {
+    console.log("message created...", message.content);
+    if (message.author.bot) return;
+    await LilithService.react(message);
+});
+
+/*
+client.on( "messageCreate", async (message) => {
+
+    console.log("message created...", message.content);
+
     if (message.author.bot) return;
 
     await LilithService.react(message);
+
     const WordsGames = await WordsGameModel.find();
     const WordsGameChannels = WordsGames.map((WordsGame) => {
         return WordsGame.channelId;
@@ -67,7 +150,7 @@ client.on( "messageCreate", async (message) => {
     console.log("ids", WordsGameChannels, message.channel.id);
     if(WordsGameChannels.indexOf(message.channel.id) !== -1){
 
-            const wordGame = await wordsGameService.getWordGame(message);
+            const wordGame = await WordsGameService.getWordGame(message);
 
             if(message.content === "$wordsgamestop"){
                 await WordsGameService.stopGame(message);
@@ -122,22 +205,10 @@ client.on( "messageCreate", async (message) => {
                 return;
             }
 
-            /*if(!wordGame.gameActive) {
-                console.log("game move... analyze game move...");
-                if(message.content.startsWith(prefix)){
-                        await message.reply("wrong word. word must begin with regular letter of the alphabet");
-                        return;
-                }
-                await wordsGameService.activate(message);
-                await message.reply(`first word - ${message.content}. next word must begin with ${message.content[message.content.length - 1]}`);
-                await WordsGameService.saveWord(message);
-            } else {
-                await WordsGameService.checkWord(message)
-
-            }*/
     }
+    // words game
+    // ***
 
-    //await LilithService.react(message); - тут иногда происходит ошибка.
     //console.log("message create", message);
     //console.log("content", message.content);
     if (message.author.bot) return;
@@ -148,12 +219,6 @@ client.on( "messageCreate", async (message) => {
 
 
     switch (command){
-        case "ok" || "ок":
-            message.reply(`ХУЁК`);
-            break;
-        case "members":
-            await UserEventsService.showMembers(client, message)
-            break;
         //chanel message handlers
         case "clearnew":
             await ChanelMessagesService.clearAll(client, message)
@@ -168,18 +233,6 @@ client.on( "messageCreate", async (message) => {
             await ManageChanelsService.createPrivate(message)
             break;
         //actions
-        case "kiss":
-            if (!args.length) return;
-            await EmbedService.createEmbed(message, "kiss", args);
-            break;
-        case "hit":
-            if (!args.length) return;
-            await EmbedService.createEmbed(message, "spank", args);
-            break;
-        case "hug":
-            if (!args.length) return;
-            await EmbedService.createEmbed(message, "embrace", args);
-            break;
         case "avatar":
             if (!args.length) return;
             await EmbedService.createEmbed(message, "avatar", args);
@@ -218,17 +271,21 @@ client.on( "messageCreate", async (message) => {
             if(!args) return;
             await GetInfoService.getFilmInfo(message, args);
             break;
-        case "stopreact":
-            if(message.member.permissionsIn(message.channel).has("ADMINISTRATOR")){
-                await LilithService.stopReact();
-                await message.reply("stopped reactions.");
-            } else if(!message.member.permissionsIn(message.channel).has("ADMINISTRATOR")){
-                await message.reply("You have no permissions to tell Lilith, what to do. Only Admin of the server can.");
-            }
+        case "deleteone":
+            await message.channel.send("hello");
             break;
+            //gallows game
+        case "gallowsgame":
+            await GallowsGameService.startGame(message);
+            break;
+        case "setglead":
+            if(!args) return;
+            await GallowsGameService.setLeadingPlayer(message, args);
+            break;
+        case "setgword":
+            if(!args) return;
+            await GallowsGameService.setgword(message, args);
     }
-
-
 });
 
 
@@ -239,4 +296,4 @@ client.on( "messageCreate", async (message) => {
 client.on("guildMemberAdd", async (member) => {
     console.log("new user joined", member);
     await UserEventsService.onJoin(member)
-});
+});*///
