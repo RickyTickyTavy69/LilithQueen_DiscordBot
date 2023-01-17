@@ -151,8 +151,8 @@ export default [{
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`like ${authorId}`)
-                        .setLabel(`Like (0❤)`)
+                        .setCustomId(`like ${userId} 0`)
+                        .setLabel(`Like (0 ❤)`)
                         .setStyle(ButtonStyle.Success),
                 );
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})

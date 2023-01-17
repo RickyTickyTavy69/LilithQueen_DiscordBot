@@ -139,5 +139,30 @@ export default [
                 );
             interaction.reply({embeds: [embed], components: [row]});
         }
-    }
+    },
+    {
+        data: {
+            name: "like"
+        },
+        async execute(interaction, targetUser) {
+            const message = interaction.message;
+            const user = targetUser
+            const userId = targetUser.id;
+            const author = interaction.user.username;
+            const authorId = interaction.user.id;
+            const guild = interaction.guild;
+            const member = guild.members.cache.get(userId);
+            const like = +interaction.customId.split(" ")[2] + 1;
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`like ${userId} ${like}`)
+                        .setLabel(`Like (${like} ❤)`)
+                        .setStyle(ButtonStyle.Success),
+                );
+            const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
+            console.log("embed is...", embed);
+            message.edit({embeds: [embed], components: [row]});
+        }
+    },
     ]
