@@ -151,13 +151,13 @@ export default [{
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`like ${userId} 0`)
+                        .setCustomId(`like ${userId} 0 0`)
                         .setLabel(`Like (0 ❤)`)
                         .setStyle(ButtonStyle.Success),
                 )
                 .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(`dislike ${userId} 0`)
+                    .setCustomId(`dislike ${userId} 0 0`)
                     .setLabel(`Dislike (0 💀)`)
                     .setStyle(ButtonStyle.Danger),
             );

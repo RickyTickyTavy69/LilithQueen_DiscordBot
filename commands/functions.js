@@ -153,13 +153,20 @@ export default [
             const guild = interaction.guild;
             const member = guild.members.cache.get(userId);
             const like = +interaction.customId.split(" ")[2] + 1;
+            const dislike = +interaction.customId.split(" ")[3] + 1;
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`like ${userId} ${like}`)
+                        .setCustomId(`like ${userId} ${like} ${dislike}`)
                         .setLabel(`Like (${like} ❤)`)
                         .setStyle(ButtonStyle.Success),
-                );
+                )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`dislike ${userId} ${like} ${dislike}`)
+                        .setLabel(`Like (${dislike} 💀)`)
+                        .setStyle(ButtonStyle.Danger),
+                )
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
             console.log("embed is...", embed);
             message.edit({embeds: [embed], components: [row]});
@@ -177,8 +184,15 @@ export default [
             const authorId = interaction.user.id;
             const guild = interaction.guild;
             const member = guild.members.cache.get(userId);
-            const dislike = +interaction.customId.split(" ")[2] + 1;
+            const like = +interaction.customId.split(" ")[2] + 1;
+            const dislike = +interaction.customId.split(" ")[3] + 1;
             const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`like ${userId} ${like}`)
+                        .setLabel(`Like (${like} ❤)`)
+                        .setStyle(ButtonStyle.Success),
+                )
                 .addComponents(
                     new ButtonBuilder()
                         .setCustomId(`dislike ${userId} ${dislike}`)
