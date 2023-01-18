@@ -146,7 +146,7 @@ export default [
         },
         async execute(interaction, targetUser) {
             const message = interaction.message;
-            const user = targetUser
+            const user = targetUser.username;
             const userId = targetUser.id;
             const author = interaction.user.username;
             const authorId = interaction.user.id;
