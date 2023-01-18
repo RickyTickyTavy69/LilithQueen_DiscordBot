@@ -154,7 +154,13 @@ export default [{
                         .setCustomId(`like ${userId} 0`)
                         .setLabel(`Like (0 ❤)`)
                         .setStyle(ButtonStyle.Success),
-                );
+                )
+                .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`dislike ${userId} 0`)
+                    .setLabel(`Dislike (0 💀)`)
+                    .setStyle(ButtonStyle.Danger),
+            );
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
             console.log("embed is...", embed);
             interaction.reply({embeds: [embed], components: [row]});
