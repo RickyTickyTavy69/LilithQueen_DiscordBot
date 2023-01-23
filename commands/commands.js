@@ -181,6 +181,10 @@ export default [{
                     .setRequired(true)
             ),
         async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")){
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+                return;
+            }
             try{
                 const guildID = interaction.guild.id;
                 const channelId = interaction.options.getChannel("channel").id;
