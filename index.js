@@ -134,6 +134,12 @@ client.on( "messageCreate", async (message) => {
     await LilithService.react(message);
 });
 
+//если один юзер постоянно заходит и выходит, ивент не работает каждый раз, выходит.
+client.on("guildMemberAdd", async (member) => {
+    console.log("new user joined", member);
+    await UserEventsService.onJoin(member)
+})
+
 /*
 client.on( "messageCreate", async (message) => {
 
@@ -292,8 +298,4 @@ client.on( "messageCreate", async (message) => {
 
 
 
-// если один юзер постоянно заходит и выходит, ивент не работает каждый раз, выходит.
-client.on("guildMemberAdd", async (member) => {
-    console.log("new user joined", member);
-    await UserEventsService.onJoin(member)
-});*///
+// ;*///

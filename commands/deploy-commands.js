@@ -10,7 +10,7 @@ for(const command of commandsArray){
     commands.push(command.data.toJSON());
 }
 
-//const commands = [ping.data.toJSON(), userinfo.data.toJSON(), serverInfo.data.toJSON(), hit.data.toJSON() ];
+//const commands = [ping.data.toJSON(), userinfo.data.toJSON(), serverInfo.data.toJSON(), hit.data.toJSON()];
 
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
@@ -27,6 +27,16 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
         );
         const data1 = await rest.put(
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TARTALOS_GUILD_ID),
+            { body: commands },
+        );
+
+        const data2 = await rest.put(
+            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INFINITY_GUILD_ID),
+            { body: commands },
+        );
+
+        const data3 = await rest.put(
+            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_GUILD_ID),
             { body: commands },
         );
 

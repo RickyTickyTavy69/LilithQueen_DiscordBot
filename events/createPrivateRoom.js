@@ -2,6 +2,9 @@ import {Collection, GatewayIntentBits, ChannelType} from "discord.js";
 const voiceCollection = new Collection();
 import Discord from "discord.js";
 
+//models
+import ServerInfoModel from "../models/serverInfoModel.js";
+
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -19,7 +22,12 @@ client.login(process.env.BOT_TOKEN);
 export default async function(oldState, newState){
     const user = await client.users.fetch(newState.id); // id of the user who entered the voice channel.
     const member = await newState.guild.members.cache.get(user.id);
-    if(!oldState.channel && newState.channel.id === '1038482541574901882'){
+    const guildID = newState.guild.id;
+    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+    if(!serverInfo) return;
+    const privateVoice = serverInfo?.privateVoice;
+    if(!privateVoice) return;
+    if(!oldState.channel && newState.channel.id === privateVoice){
         console.log("creating new private channel");
         const channel = await newState.guild.channels.create({
             name: user.tag,
