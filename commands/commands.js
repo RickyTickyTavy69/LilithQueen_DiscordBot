@@ -259,6 +259,7 @@ export default [{
                             verificationChannel: channelId,
                         })
                         await newServerInfo.save();
+                    }
                         const verifyEmbed = EmbedService.createEmbed("verification", null);
                         const row = new ActionRowBuilder()
                             .addComponents(
@@ -293,7 +294,7 @@ export default [{
                             )
                         await interaction.reply({ content: "set verify channel", embeds: [verifyEmbed], components: [row]});
                         //await interaction.reply({content: `added server to db. Set ID for the verification channel ${channelId}`, ephemeral: true});
-                    }
+
                 } catch (e) {
                     await interaction.reply(`извините, произошла ашипка ${e}`)
                 }
