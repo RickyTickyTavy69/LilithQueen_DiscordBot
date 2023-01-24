@@ -162,6 +162,16 @@ class EmbedService{
                     )
                     .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
                 return helpEmbed;
+                // embed for the verification
+            case "verification":
+                console.log("creating verification embed");
+                const verifyembed = new EmbedBuilder()
+                    .setTitle(`Verification`)
+                    .setColor(0x4AC837)
+                    .setAuthor({ name: "верификация:" })
+                    .setImage("https://media.tenor.com/dsbsIYy1qD4AAAAC/lady-cop-police.gif")
+                    .setThumbnail("https://media.tenor.com/mF3MxQJVWQIAAAAC/lune-luna.gif")
+                return verifyembed;
         }
     }
 }

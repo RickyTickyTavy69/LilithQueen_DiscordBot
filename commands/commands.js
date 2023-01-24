@@ -230,6 +230,77 @@ export default [{
 
         },
     },
+    //command for setting verification channel
+    {
+        data: new SlashCommandBuilder()
+            .setName('setverify')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")){
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const guildID = interaction.guild.id;
+                    const channelId = interaction.options.getChannel("channel").id;
+                    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+                    if (serverInfo) {
+                        console.log(`found serverInfo, ${serverInfo}`);
+                        await serverInfo.update({verificationChannel: channelId});
+                        await interaction.reply(`Set ID for the verification channel: ${channelId}`);
+                    } else {
+                        const newServerInfo = new ServerInfoModel({
+                            serverId: guildID,
+                            verificationChannel: channelId,
+                        })
+                        await newServerInfo.save();
+                        const verifyEmbed = EmbedService.createEmbed("verification", null);
+                        const row = new ActionRowBuilder()
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`verify`)
+                                    .setLabel(`Verify me`)
+                                    .setStyle(ButtonStyle.Success),
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`wrong button red`)
+                                    .setLabel(`don't verify me`)
+                                    .setStyle(ButtonStyle.Danger),
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                .setCustomId(`wrong button blue`)
+                                .setLabel(`где я?`)
+                                .setStyle(ButtonStyle.Primary),
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                .setCustomId(`wrong button grey`)
+                                .setLabel(`не нажимать сюда`)
+                                .setStyle(ButtonStyle.Secondary),
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`leaveserver`)
+                                    .setLabel(`выйти из сервера`)
+                                    .setStyle(ButtonStyle.Link),
+                            )
+                        await interaction.reply({embeds: [verifyEmbed]});
+                        await interaction.reply({content: `added server to db. Set ID for the verification channel ${channelId}`, ephemeral: true});
+                    }
+                } catch (e) {
+                    await interaction.reply(`извините, произошла ашипка ${e}`)
+                }
+            }
+
+        },
+    },
 
 ]
 

@@ -10,6 +10,9 @@ const ServerInfoModel = new Schema({
     },
     privateVoice: {
         type: String
+    },
+    verificationChannel: {
+        type: String
     }
 })
 
