@@ -288,6 +288,7 @@ export default [{
                                 new ButtonBuilder()
                                     .setCustomId(`leaveserver`)
                                     .setLabel(`выйти из сервера`)
+                                    .setURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                                     .setStyle(ButtonStyle.Link),
                             )
                         await interaction.reply({ content: "set verify channel", embeds: [verifyEmbed], components: [row]});
