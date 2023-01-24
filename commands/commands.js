@@ -286,8 +286,7 @@ export default [{
                             )
                             .addComponents(
                                 new ButtonBuilder()
-                                    .setCustomId(`leaveserver`)
-                                    .setLabel(`выйти из сервера`)
+                                    .setLabel(`ссылка`)
                                     .setURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                                     .setStyle(ButtonStyle.Link),
                             )
