@@ -48,8 +48,9 @@ class EmbedService{
         if (args) id = (action === "unblocked")? args[0] : args[0].slice(2, args[0].length-1); //unblock user with id, without the mention
         const member = await message.guild.members.cache.get(id);
         const username = (action === "unblocked")? "": member?.user.username;*/
-
-        const {user, author, data} = args;
+        const user = args?.user;
+        const author = args?.author;
+        const data = args?.data;
         const member = data?.member;
 
         switch(action) {
