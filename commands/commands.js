@@ -152,7 +152,7 @@ export default [{
             const guild = interaction.guild;
             const member = guild.members.cache.get(userId);
             const row = new ActionRowBuilder()
-                .addComponents(
+               .addComponents(
                     new ButtonBuilder()
                         .setCustomId(`like ${userId} 0 0`)
                         .setLabel(`Like (0 ❤)`)
@@ -161,11 +161,33 @@ export default [{
                 .addComponents(
                 new ButtonBuilder()
                     .setCustomId(`dislike ${userId} 0 0`)
-                    .setLabel(`Dislike (0 💀)`)
+                     .setLabel(`Dislike (0 💀)`)
                     .setStyle(ButtonStyle.Danger),
             );
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
             console.log("embed is...", embed);
+            interaction.reply({embeds: [embed], components: [row]});
+        },
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('help')
+            .setDescription('displays useful information'),
+        async execute(interaction) {
+            const row = new ActionRowBuilder()
+               .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`likebot 0 0`)
+                        .setLabel(`о, классно (0 ❤)`)
+                        .setStyle(ButtonStyle.Success),
+                )
+                .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`dislikebot 0 0`)
+                     .setLabel(`фигня (0 👎)`)
+                    .setStyle(ButtonStyle.Danger),
+            );
+            const embed = await EmbedService.createEmbed("help", {user, author,  data: null});
             interaction.reply({embeds: [embed], components: [row]});
         },
     },
