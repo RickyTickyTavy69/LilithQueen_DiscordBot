@@ -245,14 +245,12 @@ export default [{
             if(!interaction.member?.permissions.has("ADMINISTRATOR")){
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
-
                     const guildID = interaction.guild.id;
                     const channelId = interaction.options.getChannel("channel").id;
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
                         await serverInfo.update({verificationChannel: channelId});
-                        await interaction.reply(`Set ID for the verification channel: ${channelId}`);
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
