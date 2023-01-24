@@ -245,7 +245,7 @@ export default [{
             if(!interaction.member?.permissions.has("ADMINISTRATOR")){
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
-                try {
+
                     const guildID = interaction.guild.id;
                     const channelId = interaction.options.getChannel("channel").id;
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
@@ -293,11 +293,6 @@ export default [{
                                     .setStyle(ButtonStyle.Link),
                             )
                         await interaction.reply({ content: "set verify channel", embeds: [verifyEmbed], components: [row]});
-                        //await interaction.reply({content: `added server to db. Set ID for the verification channel ${channelId}`, ephemeral: true});
-
-                } catch (e) {
-                    await interaction.reply(`извините, произошла ашипка ${e}`)
-                }
             }
 
         },
