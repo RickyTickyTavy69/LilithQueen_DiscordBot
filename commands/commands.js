@@ -291,8 +291,8 @@ export default [{
                                     .setLabel(`выйти из сервера`)
                                     .setStyle(ButtonStyle.Link),
                             )
-                        await interaction.reply({embeds: [verifyEmbed]});
-                        await interaction.reply({content: `added server to db. Set ID for the verification channel ${channelId}`, ephemeral: true});
+                        await interaction.reply({ content: "set verify channel", embeds: [verifyEmbed], components: [row]});
+                        //await interaction.reply({content: `added server to db. Set ID for the verification channel ${channelId}`, ephemeral: true});
                     }
                 } catch (e) {
                     await interaction.reply(`извините, произошла ашипка ${e}`)
