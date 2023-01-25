@@ -89,6 +89,12 @@ client.on("ready", async () => {
     }
 });
 
+client.on(Events.GuildMemberAdd, (member) => {
+    console.log(`кто то зашёл`);
+    const channel = member.guild.channels.cache.get("1059224433530765373");
+    channel.send("hello my friend");
+})
+
 client.on(Events.InteractionCreate, async (interaction) => {
 
         if (interaction.isButton()) {
@@ -135,13 +141,6 @@ client.on( "messageCreate", async (message) => {
     await LilithService.react(message);
 });
 
-//если один юзер постоянно заходит и выходит, ивент не работает каждый раз, выходит.
-client.on("guildMemberAdd", async (member) => {
-    console.log("new user joined", member);
-    const channel = client.channels.fetch("1059224433530765373");
-    await channel.send("hello my friend");
-    //await UserEventsService.onJoin(member)
-});
 
 /*
 client.on( "messageCreate", async (message) => {
