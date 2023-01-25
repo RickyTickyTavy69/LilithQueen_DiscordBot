@@ -259,6 +259,7 @@ export default [{
                         await newServerInfo.save();
                     }
                         const verifyEmbed = await EmbedService.createEmbed("verification", null);
+                        console.log("verifyembed", verifyEmbed);
                         const row = new ActionRowBuilder()
                             .addComponents(
                                 new ButtonBuilder()
@@ -290,7 +291,7 @@ export default [{
                                     .setURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                                     .setStyle(ButtonStyle.Link),
                             )
-                        await interaction.reply({ content: "set verify channel", components: [row]});
+                        await interaction.reply({ content: "set verify channel", embeds: [verifyEmbed], components: [row]});
             }
 
         },
