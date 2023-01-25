@@ -174,6 +174,16 @@ export default [
     },
     {
         data: {
+            name: "verify"
+        },
+        async execute(interaction) {
+            const user = interaction.user.username;
+            const userId = interaction.user.id;
+            interaction.reply({content: "вы успешно велифисиловались. Добро пожаловать!"})
+        }
+    },
+    {
+        data: {
             name: "dislike"
         },
         async execute(interaction, targetUser) {

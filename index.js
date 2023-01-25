@@ -51,6 +51,7 @@ client.functions = new Collection()
 //import commands
 import commandArray from "./commands/commands.js"
 import functions from "./commands/functions.js"
+import UserEventsService from "./events/UserEvents.service.js";
 
 for(const command of commandArray){
     client.commands.set(command.data.name, command);
@@ -137,8 +138,10 @@ client.on( "messageCreate", async (message) => {
 //если один юзер постоянно заходит и выходит, ивент не работает каждый раз, выходит.
 client.on("guildMemberAdd", async (member) => {
     console.log("new user joined", member);
-    await UserEventsService.onJoin(member)
-})
+    const channel = client.channels.fetch("1059224433530765373");
+    await channel.send("hello my friend");
+    //await UserEventsService.onJoin(member)
+});
 
 /*
 client.on( "messageCreate", async (message) => {
