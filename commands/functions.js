@@ -2,6 +2,7 @@
 
 import EmbedService from "../events/Embed.service.js";
 import {ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
+import {client} from "../index.js";
 
 export default [
     {
@@ -167,19 +168,10 @@ export default [
                         .setLabel(`Dislike (${dislike} 💀)`)
                         .setStyle(ButtonStyle.Danger),
                 )
-            const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
+            const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}});
             console.log("embed is...", embed);
             message.edit({embeds: [embed], components: [row]});
-        }
-    },
-    {
-        data: {
-            name: "verify"
-        },
-        async execute(interaction) {
-            const user = interaction.user.username;
-            const userId = interaction.user.id;
-            interaction.reply({content: "вы успешно велифисиловались. Добро пожаловать!"})
+            interaction.reply("you liked the avatar");
         }
     },
     {
@@ -212,6 +204,23 @@ export default [
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
             console.log("embed is...", embed);
             message.edit({embeds: [embed], components: [row]});
+            interaction.reply("you disliked the avatar");
+        }
+    },
+    // commands for verification buttons
+    {
+        data: {
+            name: "verify"
+        },
+        async execute(interaction) {
+            const member = interaction.member;
+            const unverifiedRole = member.guild.roles.cache.get("1067852787846758470");
+            const userRole = member.guild.roles.cache.get("1037137641587613726");
+            member.roles.delete(unverifiedRole);
+            member.roles.add(userRole);
+            const username = interaction.user.username;
+            const userId = interaction.user.id;
+            interaction.reply({content: "вы успешно верифицировались. Добро пожаловать!", ephemeral: true});
         }
     },
     ]

@@ -1,5 +1,24 @@
-import {SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
+import {
+    SlashCommandBuilder,
+    PermissionFlagsBits,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    EmbedBuilder
+} from "discord.js";
 import EmbedService from "../events/Embed.service.js";
+
+import {Player} from "discord-player"
+import {MessageEmbed} from "discord.js";
+import {QueryType} from "discord-player";
+
+import {client} from "index.js"
+client.player = new Player(client, {
+    ytdlOptions: {
+        quality: "highestaudio",
+        highWaterMark: 1 << 25,
+    }
+})
 
 // import models
 import ServerInfoModel from "../models/serverInfoModel.js";
@@ -297,6 +316,171 @@ export default [{
         },
     },
 
+    //commands music player
+
+    {
+        data: new SlashCommandBuilder()
+            .setName('play')
+            .setDescription('plays songs for you')
+            .addSubcommand((subcommand) =>
+            subcommand.setName("song")
+                .setDescription("name of the song you want to play")
+                .addStringOption((option) =>
+                    option.setName("url")
+                        .setDescription("the song url")
+                        .setRequired(true)
+                )
+            )
+            .addSubcommand((subcommand) =>
+                subcommand.setName("playlist")
+                    .setDescription("loads a playlist of songs from the url")
+                    .addStringOption((option) =>
+                        option.setName("url")
+                            .setDescription("the playlist url")
+                            .setRequired(true)
+                    )
+            )
+            .addSubcommand((subcommand) =>
+                subcommand.setName("search")
+                    .setDescription("searches for song based on provided keywords")
+                    .addStringOption((option) =>
+                        option.setName("searchTerms")
+                            .setDescription("the search keywords")
+                            .setRequired(true)
+                    )
+            ),
+
+        async execute(interaction) {
+            if(!interaction.member.voice.channel){
+                return interaction.editReply("you need to be inside voice channel to use this command");
+            }
+
+            const queue = await client.player.createQueue(interaction.guild);
+            if(!queue.connection){
+                await queue.connect(interaction.member.voice.channel);
+
+                const embed = new EmbedBuilder()
+
+                if(interaction.options.getSubcommand() === "song"){
+                    const url = interaction.options.getString("url");
+                    const result = await client.player.search(url, {
+                        requestedBy: interaction.user,
+                        searchEngine: QueryType.YOUTUBE_VIDEO
+                    });
+                    if(result.tracks.length === 0){
+                        return interaction.editReply("no results found");
+                    }
+                    const song = result.tracks[0];
+                    await queue.addTrack(song);
+                    embed
+                        .setDescription(`**[${song.title}](${song.url})** has been added to the queue`)
+                        .setThumbnail(song.thumbnail)
+                        .setFooter({text: `Duration: ${song.duration}`})
+                } else if(interaction.options.getSubcommand() === "playlist"){
+                    const url = interaction.options.getString("url");
+                    const result = await client.player.search(url, {
+                        requestedBy: interaction.user,
+                        searchEngine: QueryType.YOUTUBE_PLAYLIST
+                    });
+                    if(result.tracks.length === 0){
+                        return interaction.editReply("no results found");
+                    }
+                    const playlist = result.playlist;
+                    await queue.addTracks(result.tracks);
+                    embed
+                        .setDescription(`**[${playlist.title}](${playlist.url})** has been added to the queue`)
+                        .setThumbnail(playlist.thumbnail)
+                } else if(interaction.options.getSubcommand() === "search"){
+                    const url = interaction.options.getString("searchTerms");
+                    const result = await client.player.search(url, {
+                        requestedBy: interaction.user,
+                        searchEngine: QueryType.AUTO
+                    });
+                    if(result.tracks.length === 0){
+                        return interaction.editReply("no results found");
+                    }
+                    const song = result.tracks[0];
+                    await queue.addTrack(song);
+                    embed
+                        .setDescription(`**[${song.title}](${song.url})** has been added to the queue`)
+                        .setThumbnail(song.thumbnail)
+                        .setFooter({text: `Duration: ${song.duration}`})
+                }
+
+            }
+        }
+
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('pause')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('exit')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('queue')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('resume')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('skip')
+            .setDescription('sets an id for the verification channel')
+            .addChannelOption(option =>
+                option
+                    .setName('channel')
+                    .setDescription('channel to set verification')
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+
+        }
+    }
 ]
 
 

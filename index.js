@@ -93,9 +93,12 @@ client.on("ready", async () => {
 client.on(Events.GuildMemberAdd, (member) => {
     console.log(`кто то зашёл`);
     const channel = member.guild.channels.cache.get("1059224433530765373");
-    const unverifiedRole = member.guild.roles.cache.get("1067852787846758470")
-    member.roles.add(unverifiedRole);
-    channel.send(`hello, ${member.user.username} how are you doing?`);
+    if(channel){
+        const unverifiedRole = member.guild.roles.cache.get("1067852787846758470")
+        member.roles.add(unverifiedRole);
+        channel.send(`hello, ${member.user.username} how are you doing?`);
+    }
+
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
