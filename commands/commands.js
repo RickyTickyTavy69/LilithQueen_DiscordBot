@@ -10,13 +10,13 @@ import EmbedService from "../events/Embed.service.js";
 import {Player} from "discord-player";
 import {QueryType} from "discord-player";
 
-import {client} from "./../index.js";
+/*import {client} from "./../index.js";
 client.player = new Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25,
     }
-})
+})*/
 
 // import models
 import ServerInfoModel from "../models/serverInfoModel.js";
@@ -316,7 +316,7 @@ export default [{
 
     //commands music player
 
-    {
+    /*{
         data: new SlashCommandBuilder()
             .setName('play')
             .setDescription('plays songs for you')
@@ -478,7 +478,7 @@ export default [{
         async execute(interaction) {
 
         }
-    }
+    }*/
 ]
 
 
