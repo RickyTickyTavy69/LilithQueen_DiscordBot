@@ -7,9 +7,7 @@ import {
     EmbedBuilder
 } from "discord.js";
 import EmbedService from "../events/Embed.service.js";
-
-import {Player} from "discord-player"
-import {MessageEmbed} from "discord.js";
+import {Player} from "discord-player";
 import {QueryType} from "discord-player";
 
 import {client} from "./../index.js";
