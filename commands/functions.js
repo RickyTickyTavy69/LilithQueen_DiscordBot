@@ -2,7 +2,7 @@
 
 import EmbedService from "../events/Embed.service.js";
 import {ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
-import {client} from "../index.js";
+import {client} from "./../index.js";
 
 export default [
     {
