@@ -12,7 +12,7 @@ import {Player} from "discord-player"
 import {MessageEmbed} from "discord.js";
 import {QueryType} from "discord-player";
 
-import {client} from "index.js"
+import {client} from "./../index.js";
 client.player = new Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
