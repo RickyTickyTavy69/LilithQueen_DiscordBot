@@ -216,11 +216,10 @@ export default [
             const member = interaction.member;
             const unverifiedRole = member.guild.roles.cache.get("1067852787846758470");
             const userRole = member.guild.roles.cache.get("1037137641587613726");
-            member.roles.delete(unverifiedRole);
+            member.roles.remove(unverifiedRole);
             member.roles.add(userRole);
             const username = interaction.user.username;
-            const userId = interaction.user.id;
-            interaction.reply({content: "вы успешно верифицировались. Добро пожаловать!", ephemeral: true});
+            interaction.reply({content: `${username}, вы успешно верифицировались. Добро пожаловать!`, ephemeral: true});
         }
     },
     ]
