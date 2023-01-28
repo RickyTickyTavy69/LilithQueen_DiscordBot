@@ -110,7 +110,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
             console.log("actionId", actionId);
             const targetId = interaction.customId.split(" ")[1];
             //console.log(`targetId is ${targetId}`);
-            const targetUser = await client.users.fetch(targetId);
+            let targetUser = null;
+            if(targetId){
+                targetUser = await client.users.fetch(targetId);
+            }
             const func = interaction.client.functions.get(actionId);
             try{
                 await func.execute(interaction, targetUser);
