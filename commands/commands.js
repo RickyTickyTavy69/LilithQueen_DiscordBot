@@ -286,19 +286,19 @@ export default [{
                             )
                             .addComponents(
                                 new ButtonBuilder()
-                                    .setCustomId(`wrong button red`)
+                                    .setCustomId(`verifwrongred`)
                                     .setLabel(`don't verify me`)
                                     .setStyle(ButtonStyle.Danger),
                             )
                             .addComponents(
                                 new ButtonBuilder()
-                                .setCustomId(`wrong button blue`)
+                                .setCustomId(`verifwrongblue`)
                                 .setLabel(`где я?`)
                                 .setStyle(ButtonStyle.Primary),
                             )
                             .addComponents(
                                 new ButtonBuilder()
-                                .setCustomId(`wrong button grey`)
+                                .setCustomId(`verifwronggrey`)
                                 .setLabel(`не нажимать сюда`)
                                 .setStyle(ButtonStyle.Secondary),
                             )

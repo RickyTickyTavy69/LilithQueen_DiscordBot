@@ -216,11 +216,35 @@ export default [
             const member = interaction.member;
             const unverifiedRole = member.guild.roles.cache.get("1067852787846758470");
             const userRole = member.guild.roles.cache.get("1037137641587613726");
-            //member.roles.remove(unverifiedRole);
+            member.roles.remove(unverifiedRole);
             console.log("userrole", userRole);
             member.roles.add(userRole);
             const username = interaction.user.username;
             interaction.reply({content: `${username}, вы успешно верифицировались. Добро пожаловать!`, ephemeral: true});
+        }
+    },
+    {
+        data: {
+            name: "verifwrongred"
+        },
+        async execute(interaction) {
+            interaction.reply({content: `${username}, вы всё ещё не верифицировались. Это красная кнопка. Нажмите на зелёную кнопку`, ephemeral: true});
+        }
+    },
+    {
+        data: {
+            name: "verifwrongblue"
+        },
+        async execute(interaction) {
+            interaction.reply({content: `||в пизде|| . Шутка. Вы на сервере Insomnia, это отличный сервер где можно развлечься, найти друзей и хорошо провести время! (чтобы зайти нажмите зелёную кнопку)`, ephemeral: true});
+        }
+    },
+    {
+        data: {
+            name: "verifwronggrey"
+        },
+        async execute(interaction) {
+            interaction.reply({content: `лол. Ну хорошо, можешь нажимать. Мне вообще ||похуй||`, ephemeral: true});
         }
     },
     ]
