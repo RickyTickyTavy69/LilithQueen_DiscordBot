@@ -101,6 +101,15 @@ client.on(Events.GuildMemberAdd, (member) => {
 
 });
 
+client.on(Events.GuildMemberRemove, (member) => {
+    console.log(`кто то ушёл`);
+    const channel = member.guild.channels.cache.get("1068652514372751370");
+    if(channel){
+        channel.send(`жаль, что Вы уходите, ${member.user.username}. Если Вам что то не понравилось на нашем сервере, вы можете написать администрации.`);
+    }
+
+});
+
 client.on(Events.InteractionCreate, async (interaction) => {
 
         if (interaction.isButton()) {
