@@ -228,6 +228,7 @@ export default [
             name: "verifwrongred"
         },
         async execute(interaction) {
+            const username = interaction.user.username;
             interaction.reply({content: `${username}, вы всё ещё не верифицировались. Это красная кнопка. Нажмите на зелёную кнопку`, ephemeral: true});
         }
     },
