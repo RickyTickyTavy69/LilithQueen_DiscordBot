@@ -216,7 +216,7 @@ export default [
             const member = interaction.member;
             const unverifiedRole = member.guild.roles.cache.get("1067852787846758470");
             const userRole = member.guild.roles.cache.get("1037137641587613726");
-            member.roles.remove(unverifiedRole);
+            //member.roles.remove(unverifiedRole);
             console.log("userrole", userRole);
             member.roles.add(userRole);
             const username = interaction.user.username;
