@@ -237,7 +237,7 @@ export default [
             name: "verifwrongblue"
         },
         async execute(interaction) {
-            interaction.reply({content: `||в пизде|| . Шутка. Вы на сервере Insomnia, это отличный сервер где можно развлечься, найти друзей и хорошо провести время! (чтобы зайти нажмите зелёную кнопку)`, ephemeral: true});
+            interaction.reply({content: `Вы на сервере Insomnia, это отличный сервер где можно развлечься, найти друзей и хорошо провести время! (чтобы зайти нажмите зелёную кнопку)`, ephemeral: true});
         }
     },
     {
