@@ -315,10 +315,10 @@ export default [{
     },
     {
         data: new SlashCommandBuilder()
-            .setName('setunverifiedrole')
+            .setName('setunverified')
             .setDescription('sets the unverified role')
             .addRoleOption(option =>
-            option.setName("unverfied role")
+            option.setName("unverfied_role")
                 .setDescription("a role for an unverified user")
                 .setRequired(true)
             ),
