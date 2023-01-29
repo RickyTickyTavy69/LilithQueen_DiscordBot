@@ -32,16 +32,7 @@ const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN);
 
 
 export const client = new Discord.Client({
-        intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.MessageContent,
-            GatewayIntentBits.GuildVoiceStates,
-            GatewayIntentBits.DirectMessages,
-            GatewayIntentBits.DirectMessageReactions,
-            GatewayIntentBits.DirectMessageTyping,
-            GatewayIntentBits.GuildMembers,
-        ], partials: [
+        intents: 32767, partials: [
             Partials.Message, Partials.User, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.ThreadMember
         ]
     }
@@ -157,6 +148,10 @@ client.on( "messageCreate", async (message) => {
     console.log("message created...", message.content);
     if (message.author.bot) return;
     await LilithService.react(message);
+});
+
+client.on( "messageReactionAdd", async (reaction) => {
+    console.log(`new reaction, ${reaction}`)
 });
 
 
