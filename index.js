@@ -32,7 +32,16 @@ const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN);
 
 
 export const client = new Discord.Client({
-        intents: 32767, partials: [
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.MessageContent,
+            GatewayIntentBits.GuildVoiceStates,
+            GatewayIntentBits.DirectMessages,
+            GatewayIntentBits.DirectMessageReactions,
+            GatewayIntentBits.DirectMessageTyping,
+            GatewayIntentBits.GuildMembers,
+        ], partials: [
             Partials.Message, Partials.User, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.ThreadMember
         ]
     }
