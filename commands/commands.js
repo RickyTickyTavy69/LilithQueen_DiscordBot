@@ -313,6 +313,29 @@ export default [{
 
         },
     },
+    {
+        data: new SlashCommandBuilder()
+            .setName('setunverifiedrole')
+            .setDescription('sets the unverified role')
+            .addRoleOption(),
+        async execute(interaction) {
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`likebot 0 0`)
+                        .setLabel(`о, классно (0 ❤)`)
+                        .setStyle(ButtonStyle.Success),
+                )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`dislikebot 0 0`)
+                        .setLabel(`фигня (0 👎)`)
+                        .setStyle(ButtonStyle.Danger),
+                );
+            const embed = await EmbedService.createEmbed("help", {user, author,  data: null});
+            interaction.reply({embeds: [embed], components: [row]});
+        },
+    },
 
     //commands music player
 
