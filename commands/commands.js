@@ -317,7 +317,11 @@ export default [{
         data: new SlashCommandBuilder()
             .setName('setunverifiedrole')
             .setDescription('sets the unverified role')
-            .addRoleOption(),
+            .addRoleOption(option =>
+            option.setName("unverfied role")
+                .setDescription("a role for an unverified user")
+                .setRequired(true)
+            ),
         async execute(interaction) {
             const row = new ActionRowBuilder()
                 .addComponents(
