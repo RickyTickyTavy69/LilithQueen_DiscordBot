@@ -394,7 +394,7 @@ export default [{
         data: new SlashCommandBuilder()
             .setName('setwelcome')
             .setDescription('sets the welcome channel')
-            .addRoleOption(option =>
+            .addChannelOption(option =>
                 option.setName("welcome_channel")
                     .setDescription("a channel for welcome messages")
                     .setRequired(true)
@@ -404,7 +404,7 @@ export default [{
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
                 try {
-                    const welcomeChannelID = interaction.options.getRole("welcome_channel").id;
+                    const welcomeChannelID = interaction.options.getChannel("welcome_channel").id;
                     const guildID = interaction.guild.id;
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
@@ -432,7 +432,7 @@ export default [{
         data: new SlashCommandBuilder()
             .setName('setgoodbye')
             .setDescription('sets the goodbye channel')
-            .addRoleOption(option =>
+            .addChannelOption(option =>
                 option.setName("goodbye_channel")
                     .setDescription("a channel for goodbye messages")
                     .setRequired(true)
@@ -442,7 +442,7 @@ export default [{
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
                 try {
-                    const goodbyeChannelID = interaction.options.getRole("goodbye_channel").id;
+                    const goodbyeChannelID = interaction.options.getChannel("goodbye_channel").id;
                     const guildID = interaction.guild.id;
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
