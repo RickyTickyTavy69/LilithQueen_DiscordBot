@@ -447,7 +447,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await ServerInfoModel.findOneAndUpdate({serverId: guildID}, {goodbyeChannelID});
+                        await ServerInfoModel.findOneAndUpdate({serverId: guildID}, {goodbyeChannelId: goodbyeChannelID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
