@@ -351,6 +351,44 @@ export default [{
 
         },
     },
+    {
+        data: new SlashCommandBuilder()
+            .setName('setdefaultrole')
+            .setDescription('sets the default user role')
+            .addRoleOption(option =>
+                option.setName("default_role")
+                    .setDescription("a role for an verified user")
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const defaultRoleID = interaction.options.getRole("default_role").id;
+                    const guildID = interaction.guild.id;
+                    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+                    if (serverInfo) {
+                        console.log(`found serverInfo, ${serverInfo}`);
+                        await serverInfo.update({defaultRoleID});
+                    } else {
+                        const newServerInfo = new ServerInfoModel({
+                            serverId: guildID,
+                            defaultRoleID,
+                        })
+                        await newServerInfo.save();
+                    }
+                    interaction.reply({
+                        content: `unverified role updated. role ID ${defaultRoleID}`,
+                        ephemeral: true,
+                    });
+                } catch (e) {
+                    interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                }
+            }
+
+        },
+    }
 
     //commands music player
 

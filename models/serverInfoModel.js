@@ -16,6 +16,9 @@ const ServerInfoModel = new Schema({
     },
     unverifiedroleID: {
         type: String
+    },
+    defaultRoleID: {
+        type: String
     }
 })
 
