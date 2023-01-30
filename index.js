@@ -89,7 +89,6 @@ client.on(Events.GuildMemberAdd, (member) => {
         member.roles.add(unverifiedRole);
         channel.send(`hello, ${member.user.username} how are you doing?`);
     }
-
 });
 
 client.on(Events.GuildMemberRemove, (member) => {
@@ -98,7 +97,6 @@ client.on(Events.GuildMemberRemove, (member) => {
     if(channel){
         channel.send(`жаль, что Вы уходите, ${member.user.username}. Если Вам что то не понравилось на нашем сервере, вы можете написать администрации.`);
     }
-
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {

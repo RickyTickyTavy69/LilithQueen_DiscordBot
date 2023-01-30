@@ -3,7 +3,7 @@ const {Schema, model} = pkg;
 
 const ServerInfoModel = new Schema({
     serverId: {
-      type: String
+        type: String
     },
     reactions: {
         type: Boolean
@@ -19,6 +19,12 @@ const ServerInfoModel = new Schema({
     },
     defaultRoleID: {
         type: String
+    },
+    welcomeChannelId: {
+        type: String
+    },
+    goodbyeChannelId: {
+        type : String
     }
 })
 

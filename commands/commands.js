@@ -388,8 +388,84 @@ export default [{
             }
 
         },
-    }
+    },
+    // commands for welcome and goodbye channels
+    {
+        data: new SlashCommandBuilder()
+            .setName('setwelcome')
+            .setDescription('sets the welcome channel')
+            .addRoleOption(option =>
+                option.setName("welcome_channel")
+                    .setDescription("a channel for welcome messages")
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const welcomeChannelID = interaction.options.getRole("welcome_channel").id;
+                    const guildID = interaction.guild.id;
+                    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+                    if (serverInfo) {
+                        console.log(`found serverInfo, ${serverInfo}`);
+                        await serverInfo.update({welcomeChannelID});
+                    } else {
+                        const newServerInfo = new ServerInfoModel({
+                            serverId: guildID,
+                            welcomeChannelID,
+                        })
+                        await newServerInfo.save();
+                    }
+                    interaction.reply({
+                        content: `set welcomeChannel, ID ${welcomeChannelID}`,
+                        ephemeral: true,
+                    });
+                } catch (e) {
+                    interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                }
+            }
 
+        },
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('setgoodbye')
+            .setDescription('sets the goodbye channel')
+            .addRoleOption(option =>
+                option.setName("goodbye_channel")
+                    .setDescription("a channel for goodbye messages")
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const goodbyeChannelID = interaction.options.getRole("goodbye_channel").id;
+                    const guildID = interaction.guild.id;
+                    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+                    if (serverInfo) {
+                        console.log(`found serverInfo, ${serverInfo}`);
+                        await serverInfo.update({goodbyeChannelID});
+                    } else {
+                        const newServerInfo = new ServerInfoModel({
+                            serverId: guildID,
+                            goodbyeChannelID,
+                        })
+                        await newServerInfo.save();
+                    }
+                    interaction.reply({
+                        content: `set welcomeChannel, ID ${goodbyeChannelID}`,
+                        ephemeral: true,
+                    });
+                } catch (e) {
+                    interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                }
+            }
+
+        },
+    }
     //commands music player
 
     /*{
