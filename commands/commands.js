@@ -409,7 +409,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.update({welcomeChannelID});
+                        await ServerInfoModel.findOneAndUpdate({serverId: guildID}, {welcomeChannelID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
@@ -447,7 +447,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.update({goodbyeChannelID});
+                        await ServerInfoModel.findOneAndUpdate({serverId: guildID}, {goodbyeChannelID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
@@ -456,7 +456,7 @@ export default [{
                         await newServerInfo.save();
                     }
                     interaction.reply({
-                        content: `set welcomeChannel, ID ${goodbyeChannelID}`,
+                        content: `set goodbyechannel, ID ${goodbyeChannelID}`,
                         ephemeral: true,
                     });
                 } catch (e) {
