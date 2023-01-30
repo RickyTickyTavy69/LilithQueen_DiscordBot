@@ -332,7 +332,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.update({unverifiedroleID});
+                        await serverInfo.findOneAndUpdate({serverId: guildID}, {unverifiedroleID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
@@ -370,7 +370,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.update({defaultRoleID});
+                        await ServerInfoModel.findOneAndUpdate({serverId: guildID},{defaultRoleID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
