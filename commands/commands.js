@@ -332,7 +332,7 @@ export default [{
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.findOneAndUpdate({serverId: guildID}, {defaultRoleID: unverifiedroleID});
+                        await serverInfo.findOneAndUpdate({serverId: guildID}, {unverifiedroleID: unverifiedroleID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
@@ -345,7 +345,8 @@ export default [{
                         ephemeral: true,
                     });
                 } catch (e) {
-                    interaction.reply("some error happened, we are sorry for this. You can find help in the support server");
+                    console.log("error", e);
+                    interaction.reply(`some error happened, we are sorry for this. You can find help in the support server ${e}`);
                 }
             }
 
