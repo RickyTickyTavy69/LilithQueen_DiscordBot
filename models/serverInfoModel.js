@@ -13,6 +13,9 @@ const ServerInfoModel = new Schema({
     },
     verificationChannel: {
         type: String
+    },
+    unverifiedroleID: {
+        type: String
     }
 })
 

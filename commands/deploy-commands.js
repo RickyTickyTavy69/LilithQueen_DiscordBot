@@ -30,11 +30,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             { body: commands },
         );
 
-        const data2 = await rest.put(
-            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INFINITY_GUILD_ID),
-            { body: commands },
-        );
-
         const data3 = await rest.put(
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_GUILD_ID),
             { body: commands },

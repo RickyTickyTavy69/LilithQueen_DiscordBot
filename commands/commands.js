@@ -323,21 +323,32 @@ export default [{
                 .setRequired(true)
             ),
         async execute(interaction) {
-            const row = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`likebot 0 0`)
-                        .setLabel(`о, классно (0 ❤)`)
-                        .setStyle(ButtonStyle.Success),
-                )
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`dislikebot 0 0`)
-                        .setLabel(`фигня (0 👎)`)
-                        .setStyle(ButtonStyle.Danger),
-                );
-            const embed = await EmbedService.createEmbed("help", {user, author,  data: null});
-            interaction.reply({embeds: [embed], components: [row]});
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const unverifiedroleID = interaction.options.getRole("unverified_role").id;
+                    const guildID = interaction.guild.id;
+                    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+                    if (serverInfo) {
+                        console.log(`found serverInfo, ${serverInfo}`);
+                        await serverInfo.update({unverifiedroleID});
+                    } else {
+                        const newServerInfo = new ServerInfoModel({
+                            serverId: guildID,
+                            unverifiedroleID,
+                        })
+                        await newServerInfo.save();
+                    }
+                    interaction.reply({
+                        content: `unverified role updated. role ID ${unverifiedroleID}`,
+                        ephemeral: true,
+                    });
+                } catch (e) {
+                    interaction.reply("some error happened, we are sorry for this. You can find help in the support server");
+                }
+            }
+
         },
     },
 
