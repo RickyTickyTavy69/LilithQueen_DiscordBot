@@ -318,7 +318,7 @@ export default [{
             .setName('setunverified')
             .setDescription('sets the unverified role')
             .addRoleOption(option =>
-            option.setName("unverfied_role")
+            option.setName("unverified_role")
                 .setDescription("a role for an unverified user")
                 .setRequired(true)
             ),
