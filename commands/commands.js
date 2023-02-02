@@ -20,6 +20,8 @@ client.player = new Player(client, {
 
 // import models
 import ServerInfoModel from "../models/serverInfoModel.js";
+import wordsGameModel from "../models/wordsGameModel.js";
+import WordsGameModel from "../models/wordsGameModel.js";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -316,7 +318,7 @@ export default [{
     {
         data: new SlashCommandBuilder()
             .setName('setunverified')
-            .setDescription('sets the unverified role')
+            .setDescription('sets unverified role')
             .addRoleOption(option =>
             option.setName("unverified_role")
                 .setDescription("a role for an unverified user")
@@ -327,12 +329,14 @@ export default [{
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
                 try {
-                    const unverifiedroleID = interaction.options.getRole("unverified_role").id;
+                    const unverifiedrole = interaction.options.getRole("unverified_role");
+                    console.log("role", unverifiedrole);
+                    const unverifiedroleID = unverifiedrole.id;
                     const guildID = interaction.guild.id;
                     const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
                     if (serverInfo) {
                         console.log(`found serverInfo, ${serverInfo}`);
-                        await serverInfo.findOneAndUpdate({serverId: guildID}, {unverifiedroleID: unverifiedroleID});
+                        await ServerInfoModel.findOneAndUpdate({serverId: guildID}, {unverifiedroleID: unverifiedroleID});
                     } else {
                         const newServerInfo = new ServerInfoModel({
                             serverId: guildID,
@@ -380,7 +384,7 @@ export default [{
                         await newServerInfo.save();
                     }
                     interaction.reply({
-                        content: `unverified role updated. role ID ${defaultRoleID}`,
+                        content: `default updated. role ID ${defaultRoleID}`,
                         ephemeral: true,
                     });
                 } catch (e) {
@@ -464,6 +468,46 @@ export default [{
                     interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
                 }
             }
+
+        },
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('set_words')
+            .setDescription('sets the words game channel')
+            .addChannelOption(option =>
+                option.setName("words_channel")
+                    .setDescription("a channel for words game")
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            await interaction.reply({content: "go fuck it"});
+            /*if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const WordsChannelId = interaction.options.getChannel("words_channel").id;
+                    const guildID = interaction.guild.id;
+                    const wordsGame = await WordsGameModel.findOne({serverId: guildID});
+                    if (wordsGame) {
+                        console.log("already set")
+                       //interaction.reply({content: "you have already set an ID for the words game channel", ephemeral: true});
+                    } else {
+                        const wordsGame = new WordsGameModel({
+                            serverId: guildID,
+                            channelId: WordsChannelId,
+                        })
+                        await wordsGame.save();
+                        interaction.reply({
+                            content: `set wordsgamechannel, ID ${WordsChannelId}`,
+                            ephemeral: true,
+                        });
+                    }
+                } catch (e) {
+                    console.log("error", e);
+                    //interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                }
+            }*/
 
         },
     }

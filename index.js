@@ -44,6 +44,7 @@ client.functions = new Collection()
 import commandArray from "./commands/commands.js"
 import functions from "./commands/functions.js"
 import UserEventsService from "./events/UserEvents.service.js";
+import ServerInfoModel from "./models/serverInfoModel.js";
 
 for(const command of commandArray){
     client.commands.set(command.data.name, command);
@@ -58,9 +59,11 @@ for(const func of functions){
 
 const start = async () => {
     try{
+        //console.log(`process env ${JSON.stringify(process.env)}`);
+        console.log(`token is ${process.env.BOT_TOKEN}`);
         await client.login(process.env.BOT_TOKEN)
         await mongoose.connect(process.env.MONGO_URI, () => {
-            console.log("db connected")
+            console.log("bot is here")
         });
 
         //await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INSOMNIA_GUILD_ID), {body: commands})
@@ -75,19 +78,23 @@ start();
 
 client.on("ready", async () => {
     try{
-        client.user.setActivity("У меня есть апельсиновая пушка, и я иногда из неё стреляю");
+        client.user.setActivity("сервер поддержки: https://discord.gg/CpdkYg7GQ6");
     } catch(e){
-        console.error("error", e);
+        console.error("error", e)
     }
 });
 
-client.on(Events.GuildMemberAdd, (member) => {
+client.on(Events.GuildMemberAdd, async (member) => {
     console.log(`кто то зашёл`);
-    const channel = member.guild.channels.cache.get("1059224433530765373");
-    if(channel){
-        const unverifiedRole = member.guild.roles.cache.get("1067852787846758470")
+    const guildID = member.guild.id;
+    const serverInfo = await ServerInfoModel.findOne({serverId: guildID});
+    if(serverInfo){
+        const welcomeChannelID = serverInfo.welcomeChannelId;
+        const unverifiedRoleID = serverInfo.unverifiedroleID;
+        const unverifiedRole = member.guild.roles.cache.get(unverifiedRoleID);
+        const welcomeChannel = member.guild.channels.cache.get(welcomeChannelID);
+        welcomeChannel.send(`hello, ${member.user.username} how are you doing?`);
         member.roles.add(unverifiedRole);
-        channel.send(`hello, ${member.user.username} how are you doing?`);
     }
 });
 
@@ -117,7 +124,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
                 await func.execute(interaction, targetUser);
             } catch(e){
                 console.log("error", e);
-                await interaction.reply({content: "простите, произошла ашипка", ephemeral: true })
+                await interaction.reply({content: `sorry, an error happened, ${e}`, ephemeral: true });
             }
             return;
         }
@@ -131,7 +138,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
             await command.execute(interaction);
         } catch(e){
             console.log("error", e);
-            await interaction.reply({content: "простите, произошла ашипка", ephemeral: true })
+            await interaction.reply({content: `sorry, an error happened ${e}`, ephemeral: true });
         }
 })
 

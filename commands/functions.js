@@ -3,6 +3,7 @@
 import EmbedService from "../events/Embed.service.js";
 import {ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
 import {client} from "./../index.js";
+import ServerInfoModel from "../models/serverInfoModel.js";
 
 export default [
     {
@@ -171,7 +172,7 @@ export default [
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}});
             console.log("embed is...", embed);
             message.edit({embeds: [embed], components: [row]});
-            interaction.reply("you liked the avatar");
+            interaction.reply({content: "you liked the avatar", ephemeral: true});
         }
     },
     {
@@ -204,7 +205,7 @@ export default [
             const embed = await EmbedService.createEmbed("ava", {user, author,  data: {member}})
             console.log("embed is...", embed);
             message.edit({embeds: [embed], components: [row]});
-            interaction.reply("you disliked the avatar");
+            interaction.reply({content: "you disliked the avatar", ephemeral: true});
         }
     },
     // commands for verification buttons
@@ -214,10 +215,15 @@ export default [
         },
         async execute(interaction) {
             const member = interaction.member;
-            const unverifiedRole = member.guild.roles.cache.get("1067852787846758470");
-            const userRole = member.guild.roles.cache.get("1037137641587613726");
+            const guildId = interaction.guild.id;
+            const serverInfo = await ServerInfoModel.findOne({serverId: guildId});
+            const userRoleId = serverInfo.defaultRoleID;
+            const unverifiedRoleId = serverInfo.unverifiedroleID;
+            console.log("unverifiedID", unverifiedRoleId);
+            const unverifiedRole = member.guild.roles.cache.get(unverifiedRoleId);
+            console.log("unverifiedRole", unverifiedRole);
+            const userRole = member.guild.roles.cache.get(userRoleId);
             member.roles.remove(unverifiedRole);
-            console.log("userrole", userRole);
             member.roles.add(userRole);
             const username = interaction.user.username;
             interaction.reply({content: `${username}, вы успешно верифицировались. Добро пожаловать!`, ephemeral: true});
@@ -237,7 +243,7 @@ export default [
             name: "verifwrongblue"
         },
         async execute(interaction) {
-            interaction.reply({content: `Вы на сервере Insomnia, это отличный сервер где можно развлечься, найти друзей и хорошо провести время! (чтобы зайти нажмите зелёную кнопку)`, ephemeral: true});
+            interaction.reply({content: `Вы на сервере ${interaction.guild.name}, это отличный сервер где можно развлечься, найти друзей и хорошо провести время! (чтобы зайти нажмите зелёную кнопку)`, ephemeral: true});
         }
     },
     {
