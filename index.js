@@ -150,9 +150,16 @@ client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
 });
 
 client.on( "messageCreate", async (message) => {
-    console.log("message created...", message.content);
     if (message.author.bot) return;
     await LilithService.react(message);
+    console.log("message created...", message.content);
+    // here the bot should control if the message is in the words channel
+    const guildId = message.guild.id;
+    const wordsChannel = await WordsGameModel.findOne({ serverId: guildId});
+    if(!wordsChannel) return;
+    if(wordsChannel.channelId === message.channel.id){
+        console.log("word printed", message.content);
+    }
 });
 
 client.on( "messageReactionAdd", async (reaction) => {
