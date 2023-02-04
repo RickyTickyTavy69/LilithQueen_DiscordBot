@@ -482,7 +482,7 @@ export default [{
             ),
         async execute(interaction) {
             await interaction.reply({content: "go fuck it"});
-            /*if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
                 try {
@@ -491,7 +491,7 @@ export default [{
                     const wordsGame = await WordsGameModel.findOne({serverId: guildID});
                     if (wordsGame) {
                         console.log("already set")
-                       //interaction.reply({content: "you have already set an ID for the words game channel", ephemeral: true});
+                       interaction.reply({content: "you have already set an ID for the words game channel", ephemeral: true});
                     } else {
                         const wordsGame = new WordsGameModel({
                             serverId: guildID,
@@ -505,9 +505,9 @@ export default [{
                     }
                 } catch (e) {
                     console.log("error", e);
-                    //interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                    interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
                 }
-            }*/
+            }
 
         },
     }
