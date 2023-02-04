@@ -481,7 +481,6 @@ export default [{
                     .setRequired(true)
             ),
         async execute(interaction) {
-            await interaction.reply({content: "go fuck it"});
             if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
                 interaction.reply(`you don't have permissions to use this command. Admin permission required`);
             } else {
