@@ -20,6 +20,7 @@ import WordsGameService from "./events/wordsGame.service.js";
 import GetInfoService from "./events/getInfo.service.js";*/
 // rewrite to commands
 import LilithService from "./events/Lilith.service.js";
+import wordsgameMethods from "./api/wordsgameMethods.js";
 
 // import models
 import WordsGameModel from "./models/wordsGameModel.js";
@@ -45,6 +46,7 @@ import commandArray from "./commands/commands.js"
 import functions from "./commands/functions.js"
 import UserEventsService from "./events/UserEvents.service.js";
 import ServerInfoModel from "./models/serverInfoModel.js";
+
 
 for(const command of commandArray){
     client.commands.set(command.data.name, command);
@@ -159,6 +161,14 @@ client.on( "messageCreate", async (message) => {
     if(!wordsChannel) return;
     if(wordsChannel.channelId === message.channel.id){
         console.log("word printed", message.content);
+        if(message.content.split(" ").length > 1){
+            await message.reply("please, use just one word, not more then one.");
+            await message.delete();
+            return;
+        }
+        const word = message.content;
+        const result = await wordsgameMethods.lookUp(word);
+        await message.reply({content: `this is result ${result}`});
     }
 });
 
