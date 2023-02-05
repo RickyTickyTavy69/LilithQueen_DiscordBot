@@ -31,6 +31,7 @@ class WordsgameMethods{
             const wordsGame = await wordsGameModel.findOne({serverId: guildId});
             const words = wordsGame.usedWords;
             const wordLowCase = word.toLowerCase();
+            //console.log(`right word is ${rightWord}`)
             if(!words.length){
                 return true;
             } else{
@@ -39,8 +40,12 @@ class WordsgameMethods{
                     message.delete()
                     return false
                 }
-                if(words.at(-1).at(-1) !== wordLowCase[0]){
-                    await message.reply(`слово должно начинаться на букву ${words.at(-1).at(-1)}. Ваше слово начинается на букву ${word[0]}`)
+                const lastWord = words.at(-1);
+                const rightWord = lastWord.replace("ь", "").replace("ъ", "");
+                const LastLetter = rightWord.at(-1);
+                console.log(`first letter ${LastLetter}, second letter is ${wordLowCase[0]}`)
+                if(LastLetter.toLowerCase() !== wordLowCase[0]){
+                    await message.reply(`слово должно начинаться на букву ${LastLetter}. Ваше слово начинается на букву ${wordLowCase[0]}`)
                     message.delete()
                     return false
                 }
