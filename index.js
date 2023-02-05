@@ -31,9 +31,8 @@ import {REST} from "discord.js";
 import {Routes} from "discord.js";
 const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN);
 
-
 export const client = new Discord.Client({
-        intents: 32767, partials: [
+    intents: [3276799] , partials: [
             Partials.Message, Partials.User, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.ThreadMember
         ]
     }
@@ -135,7 +134,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
         console.log("create", interaction.client.commands);
         console.log("command name", interaction.commandName);
         const command = interaction.client.commands.get(interaction.commandName);
-
         try{
             await command.execute(interaction);
         } catch(e){
@@ -156,6 +154,7 @@ client.on( "messageCreate", async (message) => {
     await LilithService.react(message);
     console.log("message created...", message.content);
     // here the bot should control if the message is in the words channel
+    // this is the words game code below
     const guildId = message.guild.id;
     const wordsChannel = await WordsGameModel.findOne({ serverId: guildId});
     if(!wordsChannel) return;
@@ -167,8 +166,16 @@ client.on( "messageCreate", async (message) => {
             return;
         }
         const word = message.content;
-        const result = await wordsgameMethods.lookUp(word);
-        await message.reply({content: `this is result ${result}`});
+        const result = await wordsgameMethods.lookUp(word, message);
+        if(result) {
+            const checked = await wordsgameMethods.checkWord(word, message);
+            if (checked) {
+            const words = wordsChannel.usedWords;
+            words.push(word);
+            await WordsGameModel.findOneAndUpdate({serverId: guildId, usedWords: words});
+            console.log(`saved word ${word}`);
+            }
+        }
     }
 });
 

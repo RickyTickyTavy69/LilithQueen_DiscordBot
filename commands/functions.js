@@ -220,7 +220,7 @@ export default [
             const userRoleId = serverInfo.defaultRoleID;
             const unverifiedRoleId = serverInfo.unverifiedroleID;
             console.log("unverifiedID", unverifiedRoleId);
-            const unverifiedRole = member.guild.roles.cache.get(unverifiedRoleId);
+            const unverifiedRole = await member.guild.roles.cache.get(unverifiedRoleId);
             console.log("unverifiedRole", unverifiedRole);
             const userRole = member.guild.roles.cache.get(userRoleId);
             member.roles.remove(unverifiedRole);
