@@ -41,7 +41,7 @@ class WordsgameMethods{
                     return false
                 }
                 const lastWord = words.at(-1);
-                const rightWord = lastWord.replace("ь", "").replace("ъ", "");
+                const rightWord = lastWord.replace("ь", "").replace("ъ", "").replace("ы", "");
                 const LastLetter = rightWord.at(-1);
                 console.log(`first letter ${LastLetter}, second letter is ${wordLowCase[0]}`)
                 if(LastLetter.toLowerCase() !== wordLowCase[0]){
