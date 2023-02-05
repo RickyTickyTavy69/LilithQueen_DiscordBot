@@ -39,7 +39,7 @@ class WordsgameMethods{
                     message.delete()
                     return false
                 }
-                if(words.at(-1).at(-1) !== word[0]){
+                if(words.at(-1).at(-1) !== wordLowCase[0]){
                     await message.reply(`слово должно начинаться на букву ${words.at(-1).at(-1)}. Ваше слово начинается на букву ${word[0]}`)
                     message.delete()
                     return false
