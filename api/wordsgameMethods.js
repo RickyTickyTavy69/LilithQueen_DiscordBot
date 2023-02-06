@@ -9,7 +9,7 @@ class WordsgameMethods{
         try{
             const result = await axios.get(`https://developers.lingvolive.com/api/v1/Translation?text=${word}&srcLang=1049&dstLang=1033&isCaseSensitive=false`, {
                 headers: {
-                    Authorization: `Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFMk56VTJPRGt5TVRVc0lrMXZaR1ZzSWpwN0lrTm9ZWEpoWTNSbGNuTlFaWEpFWVhraU9qVXdNREF3TENKVmMyVnlTV1FpT2pjek9ESXNJbFZ1YVhGMVpVbGtJam9pT1Rrd04yVXhOamN0TnpaaU1DMDBNV016TFdFelptUXRObVV3WWpJd1pEa3dOelZrSW4xOS45TU5LNnBfRm5xTzk2YXo3YmhOSy1LMk9qdTRkYlY5NVpzTVRUTnZrMEQw`
+                    Authorization: `Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFMk56VTNPRE13TWpRc0lrMXZaR1ZzSWpwN0lrTm9ZWEpoWTNSbGNuTlFaWEpFWVhraU9qVXdNREF3TENKVmMyVnlTV1FpT2pjek9ESXNJbFZ1YVhGMVpVbGtJam9pT1Rrd04yVXhOamN0TnpaaU1DMDBNV016TFdFelptUXRObVV3WWpJd1pEa3dOelZrSW4xOS5pU3BhbnlKY2J4RDB3Tm0taktUbTVtNDg5bjZWV0pVZHhlVFhVS2JSNmJv`
                 }
             });
             message.react("✅");
