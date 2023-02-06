@@ -509,6 +509,14 @@ export default [{
             }
 
         },
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('testimg')
+            .setDescription('test import img'),
+        async execute(interaction) {
+            await interaction.reply("testing");
+        }
     }
     //commands music player
 
