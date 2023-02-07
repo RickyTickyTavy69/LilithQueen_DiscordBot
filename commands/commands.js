@@ -516,7 +516,7 @@ export default [{
             .setName('test_img')
             .setDescription('test import img'),
         async execute(interaction) {
-            const canvas = new Canvas(800, 450);
+            const canvas = Canvas.createCanvas(800, 450)
             const ctx = canvas.getContext('2d');
             const background = await Canvas.loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
