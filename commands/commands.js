@@ -22,7 +22,7 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
-import {Canvas} from "@napi-rs/canvas";
+import {Canvas} from "canvas";
 
 export default [{
     data: new SlashCommandBuilder()
