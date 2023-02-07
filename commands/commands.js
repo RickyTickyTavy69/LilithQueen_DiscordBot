@@ -512,7 +512,7 @@ export default [{
     },
     {
         data: new SlashCommandBuilder()
-            .setName('testimg')
+            .setName('test_img')
             .setDescription('test import img'),
         async execute(interaction) {
             await interaction.reply("testing");
