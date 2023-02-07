@@ -1,4 +1,4 @@
-import Discord, {Partials, Events, Collection} from "discord.js";
+import Discord, {Partials, Events, Collection, ActivityType} from "discord.js";
 import {GatewayIntentBits} from "discord.js";
 import createPrivateRoom from "./events/createPrivateRoom.js";
 
@@ -79,7 +79,13 @@ start();
 
 client.on("ready", async () => {
     try{
-        client.user.setActivity("сервер поддержки: https://discord.gg/CpdkYg7GQ6");
+        client.user.setPresence({
+            activities: [{
+                name: "сервер поддержки: https://discord.gg/CpdkYg7GQ6",
+                type: ActivityType.Custom,
+            }],
+            status: "online",
+        });
     } catch(e){
         console.error("error", e)
     }
