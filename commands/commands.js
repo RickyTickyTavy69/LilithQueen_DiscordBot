@@ -4,7 +4,7 @@ import {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    EmbedBuilder
+    EmbedBuilder, Attachment, AttachmentBuilder
 } from "discord.js";
 import EmbedService from "../events/Embed.service.js";
 import {Player} from "discord-player";
@@ -22,6 +22,7 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
+import {Canvas} from "@napi-rs/canvas";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -515,7 +516,12 @@ export default [{
             .setName('test_img')
             .setDescription('test import img'),
         async execute(interaction) {
-            await interaction.reply("testing");
+            const canvas = new Canvas(800, 450);
+            const ctx = canvas.getContext('2d');
+            const background = await Canvas.loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+            const attachment = new AttachmentBuilder(canvas.toBuffer("image/png"), "meme.png")
+            interaction.reply({attachment: [attachment]});
         }
     }
     //commands music player
