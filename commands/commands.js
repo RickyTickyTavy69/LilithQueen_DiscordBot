@@ -22,7 +22,7 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
-import {Canvas} from "@napi-rs/canvas";
+import {Canvas, createCanvas, loadImage} from "@napi-rs/canvas";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -516,7 +516,6 @@ export default [{
             .setName('test_img')
             .setDescription('test import img'),
         async execute(interaction) {
-            const {createCanvas, loadImage} = Canvas;
             const canvas = createCanvas(800, 450);
             const ctx = canvas.getContext('2d');
             const background = loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg")
