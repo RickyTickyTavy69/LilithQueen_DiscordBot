@@ -524,13 +524,13 @@ export default [{
             //ctx.drawImage(background, canvas.width / 2 - background.width / 2, canvas.height / 2 - canvas.height / 2); // no width / height necessary?
 
             //layer
-            ctx.fillStyle = "#000000";
+            /*ctx.fillStyle = "#000000";
             ctx.globalAlpha = 0.5;
             ctx.fillRect(0,0,25,canvas.height);
             ctx.fillRect(canvas.width - 25, 0, 25, canvas.height);
             ctx.fillRect(25, 0, canvas.width - 50, 25);
             ctx.fillRect(25, canvas.height - 25, canvas.width - 50, 25);
-            ctx.globalAlpha = 1;
+            ctx.globalAlpha = 1;*/
 
             //title
             const welc = "WELCOME";
