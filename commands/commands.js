@@ -521,9 +521,15 @@ export default [{
             const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
             ctx.font = "30px sans-serif"
+            ctx.textAlign = "center";
             ctx.fillStyle = "#FDF5E6";
             ctx.fillText("this is the text of the image, so you can read it", 450, 100);
+            ctx.beginPath();
+            ctx.arc(512, 166, 128, 0, Math.PI * 2, true);
+            ctx.stroke();
             ctx.fill();
+            ctx.closePath();
+            ctx.clip();
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
         }
