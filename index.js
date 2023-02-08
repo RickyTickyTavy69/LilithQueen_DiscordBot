@@ -131,8 +131,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
         }
 
         if(!interaction.isChatInputCommand()) return
-        console.log("create", interaction.client.commands);
-        console.log("command name", interaction.commandName);
+        //console.log("create", interaction.client.commands);
+        //console.log("command name", interaction.commandName);
         const command = interaction.client.commands.get(interaction.commandName);
         try{
             await command.execute(interaction);
