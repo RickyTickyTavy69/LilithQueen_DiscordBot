@@ -535,12 +535,9 @@ export default [{
             //title
             const welc = "WELCOME";
             GlobalFonts.registerFromPath("../assets/fonts/Roboto.ttf", "roboto");
-            ctx.font = "bold 90px roboto";
-            ctx.strokeStyle = "#dc0d0d";
-            ctx.lineWidth = 12;
-            ctx.strokeText("welcome here brother", 0, 0);
+            ctx.font = "40px";
             ctx.fillStyle = "#31b61d";
-            ctx.fillText("welcome here brother", 0, 0);
+            ctx.fillText("welcome here brother", 10, 20);
 
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
