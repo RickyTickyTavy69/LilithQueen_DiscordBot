@@ -518,10 +518,10 @@ export default [{
         async execute(interaction) {
             const canvas = createCanvas(800, 450);
             const ctx = canvas.getContext('2d');
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0,0, canvas.width, canvas.height);
-            const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
-            ctx.drawImage(background, canvas.width / 2 - background.width / 2, canvas.height / 2 - canvas.height / 2); // no width / height necessary?
+            //ctx.fillStyle = "#FFFFFF";
+            //ctx.fillRect(0,0, canvas.width, canvas.height);
+            //const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
+            //ctx.drawImage(background, canvas.width / 2 - background.width / 2, canvas.height / 2 - canvas.height / 2); // no width / height necessary?
 
             //layer
             ctx.fillStyle = "#000000";
