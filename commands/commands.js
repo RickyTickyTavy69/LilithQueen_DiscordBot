@@ -23,6 +23,7 @@ import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
 import {createCanvas, loadImage, registerFont } from "canvas";
+import {resolve} from "path"
 
 export default [{
     data: new SlashCommandBuilder()
@@ -534,7 +535,7 @@ export default [{
 
             //title
             const welc = "WELCOME";
-            registerFont("../assets/fonts/Roboto.ttf", {family: "roboto", weight: "bold"});
+            registerFont(resolve("../assets/fonts/Roboto.ttf"), {family: "roboto", weight: "bold"});
             ctx.font = "40px";
             ctx.fillStyle = "#31b61d";
             ctx.fillText("welcome here brother", 10, 20);
