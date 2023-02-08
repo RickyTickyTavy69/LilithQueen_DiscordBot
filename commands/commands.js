@@ -534,12 +534,12 @@ export default [{
 
             //title
             const welc = "WELCOME";
-            ctx.font = "bold 90px Sans";
-            ctx.strokeStyle = "#000000";
+            ctx.font = "bold 90px Arial";
+            ctx.strokeStyle = "#dc0d0d";
             ctx.lineWidth = 12;
-            ctx.strokeText(welc, 450, 100);
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText(welc, 450, 100);
+            ctx.strokeText("welcome here brother", 0, 0);
+            ctx.fillStyle = "#31b61d";
+            ctx.fillText("welcome here brother", 0, 0);
 
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
