@@ -525,8 +525,8 @@ export default [{
             ctx.fillStyle = "#FDF5E6";
             ctx.fillText("this is the text of the image, so you can read it", 450, 100);
             ctx.beginPath();
-            ctx.arc(512, 166, 128, 0, Math.PI * 2, true);
-            ctx.stroke();
+            //ctx.arc(512, 166, 128, 0, Math.PI * 2, true);
+            //ctx.stroke();
             ctx.fill();
             ctx.closePath();
             ctx.clip();
