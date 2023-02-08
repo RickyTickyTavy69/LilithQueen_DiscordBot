@@ -22,7 +22,7 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
-import {createCanvas, loadImage} from "@napi-rs/canvas";
+import {createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -534,7 +534,8 @@ export default [{
 
             //title
             const welc = "WELCOME";
-            ctx.font = "bold 90px Arial";
+            GlobalFonts.registerFromPath("../assets/fonts/Roboto.ttf", "roboto");
+            ctx.font = "bold 90px roboto";
             ctx.strokeStyle = "#dc0d0d";
             ctx.lineWidth = 12;
             ctx.strokeText("welcome here brother", 0, 0);
