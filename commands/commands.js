@@ -518,11 +518,11 @@ export default [{
         async execute(interaction) {
             const canvas = createCanvas(800, 450);
             const ctx = canvas.getContext('2d');
-            const background = await loadImage("https://www.br.de/radio/puls/puls-meme-100~_v-img__16__9__xl_-d31c35f8186ebeb80b0cd843a7c267a0e0c81647.jpg?version=eb278");
+            const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             ctx.font = "30px sans-serif"
             ctx.fillText("this is the text of the image, so you can read it", 450, 100)
+            const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
         }
     }
