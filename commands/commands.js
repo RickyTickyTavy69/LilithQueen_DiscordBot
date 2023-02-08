@@ -522,7 +522,8 @@ export default [{
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
             ctx.font = "30px sans-serif"
             ctx.fillStyle = "#FDF5E6";
-            ctx.fillText("this is the text of the image, so you can read it", 450, 100)
+            ctx.fillText("this is the text of the image, so you can read it", 450, 100);
+            ctx.fill();
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
         }
