@@ -523,6 +523,8 @@ export default [{
             ctx.font = "50px sans-serif"
             ctx.textAlign = "center";
             ctx.fillStyle = "#FDF5E6";
+            ctx.strokeStyle = "#EB2031"
+            ctx.strokeText("this is the text of the image, so you can read it", 450, 100);
             ctx.fillText("this is the text of the image, so you can read it", 450, 100);
             ctx.beginPath();
             ctx.stroke();
