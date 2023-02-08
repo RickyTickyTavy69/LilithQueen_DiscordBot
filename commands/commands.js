@@ -22,7 +22,7 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
-import {Canvas, createCanvas, loadImage} from "@napi-rs/canvas";
+import {createCanvas, loadImage} from "@napi-rs/canvas";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -518,19 +518,29 @@ export default [{
         async execute(interaction) {
             const canvas = createCanvas(800, 450);
             const ctx = canvas.getContext('2d');
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0,0, canvas.width, canvas.height);
             const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            ctx.font = "50px sans-serif"
-            ctx.textAlign = "center";
-            ctx.fillStyle = "#FDF5E6";
-            ctx.strokeStyle = "#EB2031"
-            ctx.strokeText("this is the text of the image, so you can read it", 450, 100);
-            ctx.fillText("this is the text of the image, so you can read it", 450, 100);
-            ctx.beginPath();
-            ctx.stroke();
-            ctx.fill();
-            ctx.closePath();
-            ctx.clip();
+            ctx.drawImage(background, canvas.width / 2 - background.width / 2, canvas.height / 2 - canvas.height / 2); // no width / height necessary?
+
+            //layer
+            ctx.fillStyle = "#000000";
+            ctx.globalAlpha = 0.5;
+            ctx.fillRect(0,0,25,canvas.height);
+            ctx.fillRect(canvas.width - 25, 0, 25, canvas.height);
+            ctx.fillRect(25, 0, canvas.width - 50, 25);
+            ctx.fillRect(25, canvas.height - 25, canvas.width - 50, 25);
+            ctx.globalAlpha = 1;
+
+            //title
+            const welc = "WELCOME";
+            ctx.font = "bold 90px Sans";
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 12;
+            ctx.strokeText(welc, 450, 100);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText(welc, 450, 100);
+
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
         }
