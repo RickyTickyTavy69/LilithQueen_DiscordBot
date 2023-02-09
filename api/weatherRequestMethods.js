@@ -15,6 +15,7 @@ class WeatherRequestMethods{
     }
 
     static async sendTemperatureEmbed(lat, long, name, interaction){
+        console.log(`lat is ${lat}, long is ${long}`);
         const result = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude${long}&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum,showers_sum,snowfall_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=GMT`);
         const data = result.data;
         const weatherEmbed = new EmbedBuilder()
