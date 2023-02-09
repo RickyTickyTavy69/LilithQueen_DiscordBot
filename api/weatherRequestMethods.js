@@ -28,7 +28,7 @@ class WeatherRequestMethods{
                 { name: 'Feels like', value: `${data.daily.apparent_temperature_min[0]}°C`, inline: true },
                 { name: 'precipitation', value: `${data.daily.precipitation_sum[0]}%`, inline: true },
                 { name: 'rain', value: `${data.daily.showers_sum[0]}%`, inline: true },
-                { name: 'snow', value: `${data.daily.nowfall_sum[0]}%`, inline: true },
+                { name: 'snow', value: `${data.daily.snowfall_sum[0]}%`, inline: true },
             )
             .setImage("https://media.tenor.com/vF6R4JjcGzsAAAAC/weather-sunnyday.gif")
         interaction.reply({embeds: [weatherEmbed]});
