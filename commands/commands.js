@@ -557,7 +557,9 @@ export default [{
         async execute(interaction) {
             const location = interaction.options.getString("location");
             const {lat, long} = await weatherRequestMethods.getLocation(location, interaction);
-            interaction.reply({content: `lat: ${lat}, long: ${long}`});
+            if(lat && long){
+                await weatherRequestMethods.sendTemperatureEmbed(lat, long, location, interaction);
+            }
         }
     }
     //commands music player
