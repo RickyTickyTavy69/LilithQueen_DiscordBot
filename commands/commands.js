@@ -555,7 +555,7 @@ export default [{
                     .setDescription("location to look up the weather")
             )),
         async execute(interaction) {
-            const location = interaction.getString("location");
+            const location = interaction.options.getString("location");
             const {lat, long} = await weatherRequestMethods.getLocation(location);
             interaction.reply({content: `lat: ${lat}, long: ${long}`});
         }
