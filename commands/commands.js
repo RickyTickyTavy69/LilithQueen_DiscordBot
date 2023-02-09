@@ -553,6 +553,7 @@ export default [{
                 option
                     .setName("location")
                     .setDescription("location to look up the weather")
+                    .setRequired(true)
             )),
         async execute(interaction) {
             const location = interaction.options.getString("location");
