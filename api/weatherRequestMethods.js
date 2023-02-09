@@ -26,9 +26,9 @@ class WeatherRequestMethods{
                 { name: 'Max Temperature', value: `${data.daily.temperature_2m_max[0]}°C`, inline: true },
                 { name: 'Min Temperature', value: `${data.daily.temperature_2m_min[0]}°C`, inline: true },
                 { name: 'Feels like', value: `${data.daily.apparent_temperature_min[0]}°C`, inline: true },
-                { name: 'precipitation', value: `${data.daily.precipitation_sum[0].split(".")[1]}%`, inline: true },
-                { name: 'rain', value: `${data.showers_sum[0].split(".")[1]}%`, inline: true },
-                { name: 'snow', value: `${data.nowfall_sum[0].split(".")[1]}%`, inline: true },
+                { name: 'precipitation', value: `${data.daily.precipitation_sum[0]}%`, inline: true },
+                { name: 'rain', value: `${data.showers_sum[0]}%`, inline: true },
+                { name: 'snow', value: `${data.nowfall_sum[0]}%`, inline: true },
             )
             .setImage("https://media.tenor.com/vF6R4JjcGzsAAAAC/weather-sunnyday.gif")
         interaction.reply({embeds: [weatherEmbed]});
