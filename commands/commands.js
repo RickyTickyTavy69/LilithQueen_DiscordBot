@@ -24,6 +24,7 @@ import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
 import {createCanvas, loadImage, registerFont } from "canvas";
 import {resolve} from "path"
+import weatherRequestMethods from "../api/weatherRequestMethods.js";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -542,6 +543,21 @@ export default [{
 
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
             interaction.reply({ files: [attachment] });
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('weather')
+            .setDescription('look up the weather')
+            .addStringOption(option => (
+                option
+                    .setName("location")
+                    .setDescription("location to look up the weather")
+            )),
+        async execute(interaction) {
+            const location = interaction.getString("location");
+            const {lat, long} = await weatherRequestMethods.getLocation(location);
+            interaction.reply({content: `lat: ${lat}, long: ${long}`});
         }
     }
     //commands music player

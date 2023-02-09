@@ -21,8 +21,6 @@ class WordsgameMethods{
             console.log("error", e);
             return false;
         }
-
-
     }
 
     static async checkWord(word, message){
