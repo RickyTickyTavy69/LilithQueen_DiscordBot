@@ -40,8 +40,14 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             { body: commands },
         );
 
+        const dataGlobal = await rest.put(
+            Routes.applicationCommands(process.env.CLIENT_ID),
+            { body: commands },
+        );
+
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
         console.log(`Successfully reloaded ${data1.length} application (/) commands.`);
+        console.log(`global commands deployed ${dataGlobal.length}`);
     } catch (error) {
         // And of course, make sure you catch and log any errors!
         console.error(error);
