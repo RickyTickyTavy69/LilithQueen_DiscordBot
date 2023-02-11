@@ -531,7 +531,7 @@ export default [{
             const background = await loadImage("https://memepedia.ru/wp-content/uploads/2020/02/zhak-fresko-memy-1.jpg");
             ctx.drawImage(background, 0, 0); // no width / height necessary?
             GlobalFonts.registerFromPath(resolve("../assets/fonts/Roboto.ttf"), "roboto");
-            ctx.font = "30px Sans";
+            ctx.font = "30px roboto";
             ctx.fillStyle = "rgba(7,5,3,0.8)";
             let quoteArray = quote.split(" ");
             ctx.fillText(quote, 80, 110, 250);
