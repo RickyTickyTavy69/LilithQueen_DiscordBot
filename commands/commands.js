@@ -24,7 +24,10 @@ import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
 import pkg from "@napi-rs/canvas";
 const {createCanvas, loadImage, GlobalFonts} = pkg;
-import {resolve} from "path"
+import {resolve, join, dirname} from "path"
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import weatherRequestMethods from "../api/weatherRequestMethods.js";
 
 export default [{
@@ -530,8 +533,9 @@ export default [{
             const ctx = canvas.getContext('2d');
             const background = await loadImage("https://memepedia.ru/wp-content/uploads/2020/02/zhak-fresko-memy-1.jpg");
             ctx.drawImage(background, 0, 0); // no width / height necessary?
-            GlobalFonts.registerFromPath(resolve("../assets/fonts/Roboto.ttf"), "roboto");
-            ctx.font = "30px roboto";
+            GlobalFonts.registerFromPath(join(__dirname, "..", "/assets/fonts", "Roboto.ttf"), "roboto");
+            GlobalFonts.registerFromPath(join(__dirname, "..", "/assets/fonts", "RobotoSlab.ttf"), "robotoSlab");
+            ctx.font = "30px robotoSlab";
             ctx.fillStyle = "rgba(7,5,3,0.8)";
             let quoteArray = quote.split(" ");
             ctx.fillText(quote, 80, 110, 250);
