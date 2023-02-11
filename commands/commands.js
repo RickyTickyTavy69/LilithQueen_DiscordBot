@@ -22,7 +22,8 @@ client.player = new Player(client, {
 import ServerInfoModel from "../models/serverInfoModel.js";
 import wordsGameModel from "../models/wordsGameModel.js";
 import WordsGameModel from "../models/wordsGameModel.js";
-import {createCanvas, loadImage, registerFont } from "canvas";
+import pkg from "@napi-rs/canvas";
+const {createCanvas, loadImage, GlobalFonts} = pkg;
 import {resolve} from "path"
 import weatherRequestMethods from "../api/weatherRequestMethods.js";
 
@@ -515,34 +516,28 @@ export default [{
     },
     {
         data: new SlashCommandBuilder()
-            .setName('test_img')
-            .setDescription('test import img'),
+            .setName('fresco')
+            .setDescription('test import img')
+            .addStringOption(option => (
+                option
+                    .setName('quote')
+                    .setDescription('some clever frase')
+                    .setRequired(true)
+            )),
         async execute(interaction) {
-            const canvas = createCanvas(800, 450);
+            const quote = interaction.options.getString('quote');
+            const canvas = createCanvas(567, 281);
             const ctx = canvas.getContext('2d');
-            //ctx.fillStyle = "#FFFFFF";
-            //ctx.fillRect(0,0, canvas.width, canvas.height);
-            //const background = await loadImage("https://i.kym-cdn.com/entries/icons/mobile/000/022/138/highresrollsafe.jpg");
-            //ctx.drawImage(background, canvas.width / 2 - background.width / 2, canvas.height / 2 - canvas.height / 2); // no width / height necessary?
-
-            //layer
-            /*ctx.fillStyle = "#000000";
-            ctx.globalAlpha = 0.5;
-            ctx.fillRect(0,0,25,canvas.height);
-            ctx.fillRect(canvas.width - 25, 0, 25, canvas.height);
-            ctx.fillRect(25, 0, canvas.width - 50, 25);
-            ctx.fillRect(25, canvas.height - 25, canvas.width - 50, 25);
-            ctx.globalAlpha = 1;*/
-
-            //title
-            const welc = "WELCOME";
-            registerFont(resolve("../assets/fonts/Roboto.ttf"), {family: "roboto", weight: "bold"});
-            ctx.font = "40px";
-            ctx.fillStyle = "#31b61d";
-            ctx.fillText("welcome here brother", 10, 20);
-
+            const background = await loadImage("https://memepedia.ru/wp-content/uploads/2020/02/zhak-fresko-memy-1.jpg");
+            ctx.drawImage(background, 0, 0); // no width / height necessary?
+            GlobalFonts.registerFromPath(resolve("../assets/fonts/Roboto.ttf"), "roboto");
+            ctx.font = "30px, roboto";
+            ctx.fillStyle = "rgba(7,5,3,0.8)";
+            let quoteArray = quote.split(" ");
+            ctx.fillText(quote, 80, 110, 250);
+            ctx.textAlign = "center";
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
-            interaction.reply({ files: [attachment] });
+            interaction.reply({ files: [attachment] })
         }
     },
     {

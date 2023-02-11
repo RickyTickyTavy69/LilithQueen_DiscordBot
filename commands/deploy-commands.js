@@ -10,9 +10,6 @@ for(const command of commandsArray){
     commands.push(command.data.toJSON());
 }
 
-//const commands = [ping.data.toJSON(), userinfo.data.toJSON(), serverInfo.data.toJSON(), hit.data.toJSON()];
-
-// Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
 
