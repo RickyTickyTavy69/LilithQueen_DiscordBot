@@ -561,6 +561,15 @@ export default [{
                 await weatherRequestMethods.sendTemperatureEmbed(lat, long, location, interaction);
             }
         }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('help')
+            .setDescription('bot commands info'),
+        async execute(interaction) {
+            const HelpEmbed = EmbedService.createEmbed("help", null);
+            interaction.reply({embeds: [HelpEmbed]});
+        }
     }
     //commands music player
 
