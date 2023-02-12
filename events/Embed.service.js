@@ -149,17 +149,22 @@ class EmbedService{
                     .setAuthor({ name: "информация:" })
                     .addFields(
                         { name: '\u200B', value: '\u200B' },
-                        { name: '$clearnew', value: 'deletes new messages in the chanel, if they are not older then 14 days', inline: true },
-                        { name: '$updatestatus **status**', value: 'updates the status which the bot shows', inline: true },
-                        { name: '$privatecn', value: 'creates a private voice chanel with your name', inline: true },
-                        { name: '$kiss @username', value: 'you kiss this user (creates an embed with gif file)', inline: true },
-                        { name: '$spank @username', value: 'you spank this user (creates an embed with gif file)', inline: true },
-                        { name: '$embrace @username', value: 'you embrace this user (creates an embed with gif file)', inline: true },
-                        { name: '$avatar @username', value: 'shows an embed with the avatar of user in bigger size', inline: true },
-                        { name: '$block @username', value: 'blocks this user in your server', inline: true },
-                        { name: '$unblock @username', value: 'unblocks this user in your server', inline: true },
-                        { name: '$throw @username', value: 'throws this user from your server', inline: true },
-
+                        { name: '/help', value: 'list of bot commands', inline: true },
+                        { name: '/userinfo + @user', value: 'displays user info', inline: true },
+                        { name: '/serverinfo', value: 'displays info of a server', inline: true },
+                        { name: '/hit + @user', value: 'hit this user', inline: true },
+                        { name: '/kiss +  @user', value: 'you kiss this user', inline: true },
+                        { name: '/hug + @user', value: 'you hug this user', inline: true },
+                        { name: '/ava + @user', value: 'shows the avatar of this user', inline: true },
+                        { name: '/setprivatevoiceid + #channel', value: 'sets a channel to create private voice channels', inline: true },
+                        { name: '/setunverified + @role', value: 'sets an unverified role for unverified users', inline: true },
+                        { name: '/setdefaultrole + @role', value: 'sets a default role for verified users', inline: true },
+                        { name: '/setverify + #channel', value: 'creates a verification buttons in this channel (!!! use /setunverified & /setdefaultrole before, else this command will not work !!!)', inline: true },
+                        { name: '/setwelcome + #channel', value: 'creates a channel to display welcome messages', inline: true },
+                        { name: '/setgoodbye + #channel', value: 'creates a channel to display goodbye messages', inline: true },
+                        { name: '/set_words + #channel', value: 'creates a channel fot the words game', inline: true },
+                        { name: '/fresco + frase', value: 'creates a meme with Jacque Fresco', inline: true },
+                        { name: '/weather + city', value: 'shows the weather in your city', inline: true },
                     )
                     .setThumbnail("https://media.tenor.com/paD19Hc6f6sAAAAC/safe-word.gif")
                 return helpEmbed;
