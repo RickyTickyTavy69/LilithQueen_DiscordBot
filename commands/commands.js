@@ -552,12 +552,13 @@ export default [{
     },
     {
         data: new SlashCommandBuilder()
-            .setName('/film_info')
+            .setName('film_info')
             .setDescription('info about a film')
             .addStringOption((option => (
                 option
                     .setName("film")
                     .setDescription("a name of a film")
+                    .setRequired(true)
             ))),
         async execute(interaction) {
             const film = interaction.options.getString("film");
