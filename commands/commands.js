@@ -29,6 +29,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import weatherRequestMethods from "../api/weatherRequestMethods.js";
+import getFilmMethods from "../api/getFilmMethods.js";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -547,6 +548,21 @@ export default [{
         async execute(interaction) {
             const HelpEmbed = await EmbedService.createEmbed("help", null);
             interaction.reply({embeds: [HelpEmbed]});
+        }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('/film_info')
+            .setDescription('info about a film')
+            .addStringOption((option => (
+                option
+                    .setName("film")
+                    .setDescription("a name of a film")
+            ))),
+        async execute(interaction) {
+            const film = interaction.options.getString("film");
+            const FilmEmbed = await getFilmMethods.getFilmInfo(film)
+            interaction.reply({embeds: [FilmEmbed]});
         }
     }
     //commands music player
