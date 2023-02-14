@@ -171,7 +171,7 @@ client.on( "messageCreate", async (message) => {
             const checked = await wordsgameMethods.checkWord(word, message);
             if (checked) {
             const words = wordsChannel.usedWords;
-            words.push(word);
+            words.push(word.toLowerCase());
             await WordsGameModel.findOneAndUpdate({serverId: guildId, usedWords: words});
             console.log(`saved word ${word}`);
             }
