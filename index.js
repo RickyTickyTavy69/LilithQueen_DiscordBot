@@ -170,6 +170,11 @@ client.on("voiceStateUpdate",(oldVoiceState,newVoiceState)=>{
 });
 
 client.on( "messageCreate", async (message) => {
+    const message1 = await message.channel.messages.fetch("1076227777835057313");
+    console.log("message1", message1)
+
+
+
     if (message.author.bot) return;
     await LilithService.react(message);
     console.log("message created...", message.content);
