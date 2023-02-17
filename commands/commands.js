@@ -565,7 +565,46 @@ export default [{
             const FilmEmbed = await getFilmMethods.getFilmInfo(film)
             interaction.reply({embeds: [FilmEmbed]});
         }
-    }
+    },
+    {
+        data: new SlashCommandBuilder()
+            .setName('set_guess_words')
+            .setDescription('sets the channel for guess words')
+            .addChannelOption(option =>
+                option.setName("guess_words_channel")
+                    .setDescription("a channel for guess words game")
+                    .setRequired(true)
+            ),
+        async execute(interaction) {
+            if(!interaction.member?.permissions.has("ADMINISTRATOR")) {
+                interaction.reply(`you don't have permissions to use this command. Admin permission required`);
+            } else {
+                try {
+                    const WordsChannelId = interaction.options.getChannel("words_channel").id;
+                    const guildID = interaction.guild.id;
+                    const wordsGame = await WordsGameModel.findOne({serverId: guildID});
+                    if (wordsGame) {
+                        console.log("already set")
+                        interaction.reply({content: "you have already set an ID for the words game channel", ephemeral: true});
+                    } else {
+                        const wordsGame = new WordsGameModel({
+                            serverId: guildID,
+                            channelId: WordsChannelId,
+                        })
+                        await wordsGame.save();
+                        interaction.reply({
+                            content: `set wordsgamechannel, ID ${WordsChannelId}`,
+                            ephemeral: true,
+                        });
+                    }
+                } catch (e) {
+                    console.log("error", e);
+                    interaction.reply({content: "some error happened, we are sorry for this. You can find help in the support server", ephemeral: true});
+                }
+            }
+
+        },
+    },
     //commands music player
 
     /*{
