@@ -520,7 +520,7 @@ export default [{
             ctx.fillText(quote, 80, 110, 250);
             ctx.textAlign = "center";
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'meme.png' });
-            interaction.reply({content: "test fresco"});
+            interaction.reply({files: [attachment]});
         }
     },
     {

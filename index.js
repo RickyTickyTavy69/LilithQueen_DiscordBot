@@ -1,6 +1,11 @@
 import Discord, {Partials, Events, Collection} from "discord.js";
 import {GatewayIntentBits} from "discord.js";
 import createPrivateRoom from "./events/createPrivateRoom.js";
+import commandArray from "./commands/commands.js"
+import functions from "./commands/functions.js"
+import UserEventsService from "./events/UserEvents.service.js";
+import ServerInfoModel from "./models/serverInfoModel.js";
+import express from "express";
 
 //dotenv
 import dotenv from "dotenv";
@@ -29,8 +34,10 @@ import GallowsGameService from "./events/gallowsGameService.js";
 //discord rest
 import {REST} from "discord.js";
 import {Routes} from "discord.js";
+import CheckersAuthController from "./express/CheckersAuth.controller.js";
 const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN);
 
+// create bot client
 export const client = new Discord.Client({
     intents: [3276799] , partials: [
             Partials.Message, Partials.User, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.ThreadMember
@@ -38,13 +45,15 @@ export const client = new Discord.Client({
     }
 );
 
+//create express server
+const app = express()
+
+
+
 client.commands = new Collection();
 client.functions = new Collection()
 //import commands
-import commandArray from "./commands/commands.js"
-import functions from "./commands/functions.js"
-import UserEventsService from "./events/UserEvents.service.js";
-import ServerInfoModel from "./models/serverInfoModel.js";
+
 
 
 for(const command of commandArray){
@@ -62,10 +71,15 @@ const start = async () => {
     try{
         //console.log(`process env ${JSON.stringify(process.env)}`);
         console.log(`token is ${process.env.BOT_TOKEN}`);
+        const PORT = process.env.PORT
+        app.listen(PORT, () => {
+            console.log(`express server is running on PORT ${PORT}`)
+        })
         await client.login(process.env.BOT_TOKEN)
         await mongoose.connect(process.env.MONGO_URI, () => {
             console.log("bot is here")
         });
+
 
         //await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INSOMNIA_GUILD_ID), {body: commands})
     } catch(e){
@@ -76,10 +90,16 @@ const start = async () => {
 start();
 
 
+//configure express server routes
+
+
+
+
 
 client.on("ready", async () => {
     try{
         client.user.setActivity("сервер поддержки: https://discord.gg/CpdkYg7GQ6");
+        await CheckersAuthController.Auth()
     } catch(e){
         console.error("error", e)
     }
