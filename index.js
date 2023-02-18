@@ -100,6 +100,10 @@ client.on("ready", async () => {
     try{
         client.user.setActivity("сервер поддержки: https://discord.gg/CpdkYg7GQ6");
         await CheckersAuthController.Auth()
+        /*const channel = await client.channels.cache.get("828985360377708545");
+        const message = await channel.messages.fetch("1076306688048631838");
+        console.log("message", message)
+        message.reply("ты вообще бесполезная черепаха, что ты можешь");*/
     } catch(e){
         console.error("error", e)
     }
