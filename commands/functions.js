@@ -215,18 +215,24 @@ export default [
         },
         async execute(interaction) {
             const member = interaction.member;
-            const guildId = interaction.guild.id;
-            const serverInfo = await ServerInfoModel.findOne({serverId: guildId});
-            const userRoleId = serverInfo.defaultRoleID;
-            const unverifiedRoleId = serverInfo.unverifiedroleID;
-            console.log("unverifiedID", unverifiedRoleId);
-            const unverifiedRole = await member.guild.roles.cache.get(unverifiedRoleId);
-            console.log("unverifiedRole", unverifiedRole);
-            const userRole = member.guild.roles.cache.get(userRoleId);
-            member.roles.remove(unverifiedRole);
-            member.roles.add(userRole);
-            const username = interaction.user.username;
-            interaction.reply({content: `${username}, вы успешно верифицировались. Добро пожаловать!`, ephemeral: true});
+            if(member.user.id === "790950628452204546"){
+                interaction.reply({content: "поздравляем Вас, теперь вы гей"});
+                const gayRole = await member.guild.roles.cache.get("1077206272077733969");
+                member.roles.add(gayRole);
+            } else{
+                const guildId = interaction.guild.id;
+                const serverInfo = await ServerInfoModel.findOne({serverId: guildId});
+                const userRoleId = serverInfo.defaultRoleID;
+                const unverifiedRoleId = serverInfo.unverifiedroleID;
+                console.log("unverifiedID", unverifiedRoleId);
+                const unverifiedRole = await member.guild.roles.cache.get(unverifiedRoleId);
+                console.log("unverifiedRole", unverifiedRole);
+                const userRole = member.guild.roles.cache.get(userRoleId);
+                member.roles.remove(unverifiedRole);
+                member.roles.add(userRole);
+                const username = interaction.user.username;
+                interaction.reply({content: `${username}, вы успешно верифицировались. Добро пожаловать!`, ephemeral: true});
+            }
         }
     },
     {
