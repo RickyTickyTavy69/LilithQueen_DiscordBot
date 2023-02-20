@@ -216,7 +216,7 @@ export default [
         async execute(interaction) {
             const member = interaction.member;
             if(member.user.id === "790950628452204546"){
-                interaction.reply({content: "поздравляем Вас, теперь вы гей"});
+                interaction.reply({content: "поздравляем Вас, теперь вы гей", ephemeral: true});
                 const gayRole = await member.guild.roles.cache.get("1077206272077733969");
                 member.roles.add(gayRole);
             } else{
