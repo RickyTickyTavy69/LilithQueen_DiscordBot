@@ -134,12 +134,8 @@ client.on(Events.GuildMemberRemove, (member) => {
 client.on(Events.InteractionCreate, async (interaction) => {
 
         if (interaction.isButton()) {
-            //console.log("button pressed")
-            //console.log(`customId is ${interaction.customId}`);
             const actionId = interaction.customId.split(" ")[0];
-            console.log("actionId", actionId);
             const targetId = interaction.customId.split(" ")[1];
-            //console.log(`targetId is ${targetId}`);
             let targetUser = null;
             if(targetId){
                 targetUser = await client.users.fetch(targetId);
@@ -204,167 +200,41 @@ client.on( "messageCreate", async (message) => {
     }
 });
 
-client.on( "messageReactionAdd", async (reaction) => {
-    console.log(`new reaction, ${reaction}`)
+client.on( "messageReactionAdd", async (reaction, user) => {
+    const channelId = reaction.message.channelId
+    if (channelId === "1071874130376409108"){
+        console.log("emoji id", reaction.emoji.id);
+        const id = reaction.emoji.id;
+        console.log("userid", user.id);
+        switch(id){
+            case "1086000873353773057":
+                const member = await reaction.message.guild.members.fetch(user.id);
+                console.log("night butterfly");
+                const role = member.guild.roles.cache.find(role => role.name === "🦋_Ночная Бабочка_🦋");
+                console.log("role found", role);
+                await member.roles.add(role);
+                return;
+        }
+    }
+
 });
 
 
-/*
-client.on( "messageCreate", async (message) => {
+client.on( Events.MessageReactionRemove, async (reaction, user) => {
+    const channelId = reaction.message.channelId
+    if (channelId === "1071874130376409108") {
 
-    console.log("message created...", message.content);
-
-    if (message.author.bot) return;
-
-    await LilithService.react(message);
-
-    const WordsGames = await WordsGameModel.find();
-    const WordsGameChannels = WordsGames.map((WordsGame) => {
-        return WordsGame.channelId;
-    })
-    console.log("ids", WordsGameChannels, message.channel.id);
-    if(WordsGameChannels.indexOf(message.channel.id) !== -1){
-
-            const wordGame = await WordsGameService.getWordGame(message);
-
-            if(message.content === "$wordsgamestop"){
-                await WordsGameService.stopGame(message);
-            }
-
-            console.log("size", message.mentions.users.size);
-            if(message.mentions.users.size){
-                //const keys = Object.keys(message.mentions.users).length;
-                //console.log("keys", keys);
-                const mentions = message.mentions.users;
-                console.log("mentions", mentions);
-                let usersArray = [];
-                let usernames = [];
-                mentions.forEach((mention) => {
-                    console.log("mentioned user id", mention.id);
-                    usersArray.push({
-                        userId: mention.id,
-                        username: mention.username,
-                        points: 0,
-                        active: true,
-                    });
-                    usernames.push(mention.username);
-                });
-                await WordsGameService.addUsers(message, usersArray);
-                await message.reply(`you added players: ${usernames.join(", ")}`);
+        const id = reaction.emoji.id;
+        switch (id) {
+            case "1086000873353773057":
+                const member = await reaction.message.guild.members.fetch(user.id);
+                console.log("night butterfly");
+                const role = member.guild.roles.cache.find(role => role.name === "🦋_Ночная Бабочка_🦋");
+                console.log("role found", role);
+                await member.roles.remove(role);
                 return;
-            }
-
-
-            if(!wordGame.gameActive) {
-                console.log("game move... analyze game move...");
-                const users = await WordsGameService.checkUsers(message);
-                if(!users){
-                    console.log("users not found");
-                    await message.reply("you have not added any player yet. Add players before you start the game...");
-                    return;
-                }else {
-                    console.log("users found");
-                    await WordsGameService.checkWord(message);
-                    await message.reply(`first word - ${message.content}. next word must begin with ${message.content[message.content.length - 1]}`);
-                }
-            } else {
-                await WordsGameService.checkWord(message);
-            }
-
-            if(message.mentions){
-                const mentions = message.mentions.users;
-                console.log("mentions", mentions);
-                mentions.forEach((mention) => {
-                    console.log("mentioned user id", mention.id);
-                }); // тут потом добавлять пользователей в базу данных
-                return;
-            }
-
-    }
-    // words game
-    // ***
-
-    //console.log("message create", message);
-    //console.log("content", message.content);
-    if (message.author.bot) return;
-    if (!message.content.startsWith(prefix)) return;
-    const commandBody = message.content.slice(prefix.length);
-    const args = commandBody.split(' ');
-    const command = args.shift().toLowerCase();
-
-
-    switch (command){
-        //chanel message handlers
-        case "clearnew":
-            await ChanelMessagesService.clearAll(client, message)
-            break;
-        //bot handlers
-        case "updatestatus":
-            if (!args.length) return;
-            await LilithService.updateStatus(args, message, client)
-            break;
-        //managing chanels
-        case "privatecn":
-            await ManageChanelsService.createPrivate(message)
-            break;
-        //actions
-        case "avatar":
-            if (!args.length) return;
-            await EmbedService.createEmbed(message, "avatar", args);
-            break;
-            //administration
-        case "block":
-            if (!args.length) return;
-            await UserEventsService.banuser(message, args);
-            break;
-        case "unblock":
-            if (!args.length) return;
-            await UserEventsService.unbanUser(message, args);
-            break;
-        case "throw":
-            if (!args.length) return;
-            await UserEventsService.kickUser(message, args);
-            break;
-            //manage Server
-        case "setwelcome":
-            if (!args.length) return;
-            await ManageServerService.setWelcome(message, args);
-            break;
-        case "simjoin":
-            client.emit("guildMemberAdd", message.member);
-            break;
-            //some games
-        case "wordsgame":
-            await WordsGameService.setWordsChanel(message);
-            break;
-        case "help":
-            console.log("help embed");
-            await EmbedService.createEmbed(message, "help");
-            break;
-        case "info":
-            console.log("getting info...");
-            if(!args) return;
-            await GetInfoService.getFilmInfo(message, args);
-            break;
-        case "deleteone":
-            await message.channel.send("hello");
-            break;
-            //gallows game
-        case "gallowsgame":
-            await GallowsGameService.startGame(message);
-            break;
-        case "setglead":
-            if(!args) return;
-            await GallowsGameService.setLeadingPlayer(message, args);
-            break;
-        case "setgword":
-            if(!args) return;
-            await GallowsGameService.setgword(message, args);
+        }
     }
 });
 
 
-
-
-
-// ;*///
