@@ -22,20 +22,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.INSOMNIA_GUILD_ID),
             { body: commands },
         );
-        const data1 = await rest.put(
-            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TARTALOS_GUILD_ID),
-            { body: commands },
-        );
-
-        const data3 = await rest.put(
-            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_GUILD_ID),
-            { body: commands },
-        );
-
-        const data5 = await rest.put(
-            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.MUSIC_SERVER_GUILD_ID),
-            { body: commands },
-        );
 
         const dataGlobal = await rest.put(
             Routes.applicationCommands(process.env.CLIENT_ID),
@@ -43,7 +29,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
         );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-        console.log(`Successfully reloaded ${data1.length} application (/) commands.`);
         console.log(`global commands deployed ${dataGlobal.length}`);
     } catch (error) {
         // And of course, make sure you catch and log any errors!

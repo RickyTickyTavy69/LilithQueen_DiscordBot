@@ -30,6 +30,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import weatherRequestMethods from "../api/weatherRequestMethods.js";
 import getFilmMethods from "../api/getFilmMethods.js";
+import {UserMethods} from "../api/userMethods.js";
 
 export default [{
     data: new SlashCommandBuilder()
@@ -605,6 +606,32 @@ export default [{
 
         },
     },
+
+    {
+        data: new SlashCommandBuilder()
+            .setName('check_users')
+            .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+            .setDescription('кого нибудь чекнуть?')
+            .addStringOption((option => (
+                option
+                    .setName("user")
+                    .setDescription("кого чекнуть")
+                    .setRequired(false)
+            ))),
+        async execute(interaction) {
+            const user = interaction.options.getString("user");
+            try{
+                const checked = UserMethods.check(user, interaction);
+                if (checked)
+                    interaction.reply({content: 'я всех чекнула', ephemeral: true});
+            } catch (e){
+                interaction.reply({content: " oh, shit, I'm sorry. An error happened", ephemeral: true })
+            }
+            interaction.reply({content: 'process ended', ephemeral: true});
+        }
+    },
+
+
     //commands music player
 
     /*{
